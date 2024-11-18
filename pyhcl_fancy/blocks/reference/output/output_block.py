@@ -5,8 +5,10 @@ class OutputBlock(TerraformBlock):
     value: any
     description: str
 
-    def __init__(self, file_path: str, resource_type: str, value: any, description: str):
-        pass
+    def __init__(self):
+        super().__init__()
+        self.value = None
+        self.description = ""
 
     def convert_to_hcl(self) -> str:
         pass

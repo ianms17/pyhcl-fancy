@@ -7,5 +7,9 @@ class RealBlock(Block):
     content: dict
 
     
-    def __init__(self, state_path: str, count: int, for_each: list | dict, content: dict):
-        pass
+    def __init__(self):
+        super().__init__()
+        self.state_path = ""
+        self.count = 0
+        self.for_each = []
+        self.content = {}

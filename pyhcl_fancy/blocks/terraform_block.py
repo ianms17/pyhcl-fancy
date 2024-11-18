@@ -2,8 +2,9 @@ class TerraformBlock:
     file_path: str
     resource_type: str
 
-    def __init__(self, file_path: str, resource_type: str):
-        pass
+    def __init__(self):
+        self.file_path = ""
+        self.resource_type = ""
 
 
     def _get_resource_type(self) -> str:

@@ -5,8 +5,10 @@ class TerraformMetaBlock(TerraformBlock):
     backend: dict
     required_providers: list
 
-    def __init__(self, file_path: str, resource_type: str, backend: dict, required_providers: list):
-        pass
+    def __init__(self):
+        super().__init__()
+        self.backend = {}
+        self.required_providers = []
 
 
     def convert_to_hcl(self) -> str:

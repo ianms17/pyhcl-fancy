@@ -8,8 +8,13 @@ class ProviderBlock(TerraformBlock):
     assume_role: str
     default_tags: dict
 
-    def __init__(self, file_path: str, resource_type: str, type: str, region: str, alias: str, assume_role: str, default_tags: dict):
-        pass
+    def __init__(self):
+        super().__init__()
+        self.type = ""
+        self.region = ""
+        self.alias = ""
+        self.assume_role = ""
+        self.default_tags = {}
 
     def convert_to_hcl(self) -> str:
         pass

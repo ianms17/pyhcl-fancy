@@ -8,8 +8,13 @@ class OutputBlock(TerraformBlock):
     default: any
     validation: dict
 
-    def __init__(self, file_path: str, resource_type: str, variable_name: str, description: str, type: str, default: any, validation: dict):
-        pass
+    def __init__(self):
+        super().__init__()
+        self.variable_name = ""
+        self.description = ""
+        self.type = ""
+        self.default = None
+        self.validation = {}
 
     def convert_to_hcl(self) -> str:
         pass

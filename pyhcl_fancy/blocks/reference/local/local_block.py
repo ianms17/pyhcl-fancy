@@ -5,8 +5,9 @@ class LocalBlock(TerraformBlock):
     content: dict
 
 
-    def __init__(self, file_path: str, resource_type: str, content: dict):
-        pass
+    def __init__(self):
+        super().__init__()
+        self.content = {}
 
 
     def convert_to_hcl(self) -> str:
