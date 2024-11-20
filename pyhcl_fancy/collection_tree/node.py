@@ -11,7 +11,7 @@ class Node:
         self.parent: Node = None
         self.children: list[Node] = []
         self.is_root: bool = False
-        self.is_leaf: bool = False
+        self.is_leaf: bool = True
         
     def set_is_directory(self, file_path: str) -> None:
         self.is_directory = _is_directory(file_path) 
