@@ -1,7 +1,7 @@
 from pyhcl_fancy.blocks.terraform_block import TerraformBlock
 
 
-class OutputBlock(TerraformBlock):
+class VariableBlock(TerraformBlock):
     variable_name: str
     description: str
     type: str
