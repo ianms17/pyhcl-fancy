@@ -1,10 +1,12 @@
 class TerraformBlock:
-    file_path: str
-    resource_type: str
-
     def __init__(self):
-        self.file_path = ""
-        self.resource_type = ""
+        """
+        Initializes a new instance of the TerraformBlock class.
+
+        Attributes:
+            file_path (str): The path of the file where the block is defined
+        """
+        self.file_path: str = ""
 
 
     def _get_resource_type(self) -> str:
