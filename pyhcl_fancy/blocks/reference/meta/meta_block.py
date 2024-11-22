@@ -14,10 +14,8 @@ class TerraformMetaBlock(TerraformBlock):
         self.backend: dict = {}
         self.required_providers: list = []
 
-
     def convert_to_hcl(self) -> str:
         pass
-
 
     def read_in(self) -> str:
         pass

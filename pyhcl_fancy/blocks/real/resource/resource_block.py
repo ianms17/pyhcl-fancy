@@ -14,10 +14,8 @@ class ResourceBlock(RealBlock):
         self.resource_type: str = ""
         self.resource_name: str = ""
 
-
     def convert_to_hcl(self) -> str:
         pass
-
 
     def read_in(self) -> None:
         pass

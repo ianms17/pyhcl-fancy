@@ -1,5 +1,6 @@
 from pyhcl_fancy.blocks.terraform_block import Block
 
+
 class RealBlock(Block):
     def __init__(self):
         """

@@ -15,7 +15,6 @@ class CollectionTree:
         self.height: int = 0
         self.is_flat: bool = False
 
-    
     def add_root(self, node: Node) -> Node:
         """
         Adds a root node to the collection tree if one does not already exist.
@@ -29,7 +28,6 @@ class CollectionTree:
         if self.root is None:
             self.root = node
         return self.root
-    
 
     def add_node_to_directory(self, directory: str, child: Node) -> Node:
         """
@@ -44,7 +42,6 @@ class CollectionTree:
         """
         directory_node = self.find_directory_node(self.root, directory)
         return directory_node.add_child(child)
-    
 
     def add_submodule_directory(self, directory_node: Node, file_path: str) -> Node:
         """
@@ -59,7 +56,6 @@ class CollectionTree:
         """
         file_node = self.find_file_node(directory_node, file_path)
         return file_node.add_child(directory_node)
-
 
     def find_directory_node(self, node: Node, directory: str) -> Node:
         """
@@ -80,7 +76,6 @@ class CollectionTree:
                 if child.is_leaf:
                     continue
                 return self.find_directory_node(child, directory)
-            
 
     def find_file_node(self, node: Node, file_path: str) -> Node:
         """
@@ -105,7 +100,5 @@ class CollectionTree:
     def _increment_height(self):
         self.height += 1
 
-    
     def _set_is_flat(self):
         return self.height == 1
-        

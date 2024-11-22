@@ -14,10 +14,8 @@ class ModuleBlock(RealBlock):
         self.module_name: str = ""
         self.module_source: str = ""
 
-
     def convert_to_hcl(self) -> str:
         pass
-
 
     def read_in(self) -> None:
         pass

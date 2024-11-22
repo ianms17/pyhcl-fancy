@@ -1,7 +1,5 @@
 from typing import Self
-from pyhcl_fancy.collection_tree.utils import (
-    _is_directory
-)
+from pyhcl_fancy.collection_tree.utils import _is_directory
 
 
 class Node:
@@ -23,7 +21,7 @@ class Node:
         self.children: list[Node] = []
         self.is_root: bool = False
         self.is_leaf: bool = True
-        
+
     def set_is_directory(self, file_path: str) -> None:
         """
         Sets whether the node is a directory or not, given the file path of the node.
@@ -34,9 +32,8 @@ class Node:
         Returns:
             None
         """
-        self.is_directory = _is_directory(file_path) 
+        self.is_directory = _is_directory(file_path)
 
-    
     def add_child(self, child: Self) -> None:
         """
         Adds a child node to the current node's list of children.

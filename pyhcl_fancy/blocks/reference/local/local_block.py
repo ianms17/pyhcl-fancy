@@ -12,10 +12,8 @@ class LocalBlock(TerraformBlock):
         super().__init__()
         self.content: dict = {}
 
-
     def convert_to_hcl(self) -> str:
         pass
-
 
     def read_in(self) -> str:
         pass
