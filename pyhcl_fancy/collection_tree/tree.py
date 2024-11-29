@@ -101,4 +101,4 @@ class CollectionTree:
         self.height += 1
 
     def _set_is_flat(self):
-        return self.height == 1
+        self.is_flat = self.height == 1
