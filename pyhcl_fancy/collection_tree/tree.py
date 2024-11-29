@@ -97,8 +97,8 @@ class CollectionTree:
                     continue
                 return self.find_file_node(child, file_path)
 
-    def _increment_height(self):
+    def _increment_height(self) -> None:
         self.height += 1
 
-    def _set_is_flat(self):
+    def _set_is_flat(self) -> None:
         self.is_flat = self.height == 1
