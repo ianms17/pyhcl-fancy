@@ -1,4 +1,5 @@
 from typing import Self
+from pyhcl_fancy.blocks.terraform_block import TerraformBlock
 from pyhcl_fancy.collection_tree.utils import _is_directory
 
 
@@ -8,6 +9,7 @@ class Node:
         Initializes a new instance of the Node class.
 
         Attributes:
+            blocks (list): The content of a given file, defined as a list of Terraform blocks.
             is_directory (bool): True if the node is a directory, otherwise False.
             relative_file_path (str): The relative path of the file or directory represented by the node.
             parent (Node): The parent node in the collection tree.
@@ -15,6 +17,7 @@ class Node:
             is_root (bool): True if the node is the root node of the collection tree, otherwise False.
             is_leaf (bool): True if the node is a leaf node in the collection tree, otherwise False.
         """
+        self.blocks: list[TerraformBlock] = []
         self.is_directory: bool = False
         self.relative_file_path: str = ""
         self.parent: Node = None
@@ -45,3 +48,5 @@ class Node:
             None
         """
         self.children.append(child)
+        child.parent = self
+        self.is_leaf = False
