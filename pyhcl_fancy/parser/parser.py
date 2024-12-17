@@ -78,7 +78,8 @@ class FancyParser:
                 match block_type:
                     case "module":
                         for module in self.terraform_content[file][block_type]:
-                            module_block = self._parse_module_block(
+                            module_block = ModuleBlock()
+                            module_block.parse(
                                 module_name=module,
                                 module_file_path=file,
                                 module_content=self.terraform_content[file][block_type][module],
@@ -88,7 +89,7 @@ class FancyParser:
                         # module source points to a submodule, move that submodules directory node to the calling module's file node
                         if Path(module_block.module_source).is_dir():
                             submodule_directory_node = self.collection_tree.find_directory_node(self.collection_tree.root, module_block.module_source)
-                            self.collection_tree.move_node(submodule_directory_node, file_node)
+                            self.collection_tree.move_node(submodule_directory_node, file_node, module_block)
 
                     case "resource":
                         continue
@@ -114,30 +115,6 @@ class FancyParser:
         root = Node()
         root.is_root = True
         root.is_directory = True
+        root.submodule_state_path = ""
         root.relative_file_path = self.terraform_directory
         return self.collection_tree.add_root(root)
-
-    def _parse_module_block(self, module_name: str, module_file_path: str, module_content: dict) -> ModuleBlock:
-        pass
-        
-
-    def _parse_resource_block(self, resource_block: ResourceBlock) -> None:
-        pass
-
-    def _parse_data_block(self, data_block: DataBlock) -> None:
-        pass
-
-    def _parse_meta_block(self, meta_block: TerraformMetaBlock) -> None:
-        pass
-
-    def _parse_output_block(self, output_block: OutputBlock) -> None:
-        pass
-
-    def _parse_provider_block(self, provider_block: ProviderBlock) -> None:
-        pass
-
-    def _parse_local_block(self, local_block: LocalBlock) -> None:
-        pass
-
-    def _parse_variable_block(self, variable_block: VariableBlock) -> None:
-        pass

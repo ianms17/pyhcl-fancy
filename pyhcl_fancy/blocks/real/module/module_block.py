@@ -13,9 +13,19 @@ class ModuleBlock(RealBlock):
         super().__init__()
         self.module_name: str = ""
         self.module_source: str = ""
+        self.module_version: str = ""
 
     def convert_to_hcl(self) -> str:
         pass
 
-    def read_in(self) -> None:
-        pass
+    def parse(self, module_name: str, module_file_path: str, module_content: dict) -> None:
+        self.module_name = module_name
+        self.file_path = module_file_path
+        for attribute in module_content:
+            match attribute:
+                case "source":
+                    self.module_source = module_content[attribute]
+                case "version":
+                    self.module_version = module_content[attribute]
+                case _:
+                    self.content[attribute] = module_content[attribute]

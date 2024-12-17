@@ -1,5 +1,6 @@
 from pyhcl_fancy.collection_tree.node import Node
 from pyhcl_fancy.parser.parser import FancyParser
+from pyhcl_fancy.blocks.real.module.module_block import ModuleBlock
 from pyhcl_fancy.collection_tree.exceptions import (
     FileNodeNotFoundError,
     DirectoryNodeNotFoundError,
@@ -109,7 +110,7 @@ class CollectionTree:
         raise FileNodeNotFoundError(f"The file {file_path} was not found in the collection tree.")
     
 
-    def move_node(self, source: Node, destination: Node) -> Node:
+    def move_node(self, source: Node, destination: Node, caller: ModuleBlock) -> Node:
         if source == destination:
             raise InvalidMoveLocationError("Cannot move a node to itself.")
         elif source.parent == destination:
@@ -124,6 +125,10 @@ class CollectionTree:
             if child == source:
                 curr_parent.children.remove(child)
                 destination.add_child(source)
+                if curr_parent.submodule_state_path == "":
+                    destination.submodule_state_path = f"module.{caller.module_name}"
+                else:
+                    destination.submodule_state_path = f"{curr_parent.submodule_state_path}.module.{caller.module_name}"
 
     def _increment_height(self) -> None:
         self.height += 1

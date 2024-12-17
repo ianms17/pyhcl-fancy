@@ -24,6 +24,7 @@ class Node:
         self.children: list[Node] = []
         self.is_root: bool = False
         self.is_leaf: bool = True
+        self.submodule_state_path: str = None
 
     def set_is_directory(self, file_path: str) -> None:
         """
