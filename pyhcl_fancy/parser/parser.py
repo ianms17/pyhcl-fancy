@@ -131,7 +131,12 @@ class FancyParser:
                         )
                         file_node.blocks.append(local_block)
                     case "provider":
-                        continue
+                        for provider in self.terraform_content[file][block_type]:
+                            provider_block = ProviderBlock()
+                            provider_block.parse(
+                                raw_provider_dict=provider,
+                                provider_file_path=file
+                            )
                     case "terraform":
                         continue
                     
