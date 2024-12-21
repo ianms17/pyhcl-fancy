@@ -24,5 +24,16 @@ class VariableBlock(TerraformBlock):
     def convert_to_hcl(self) -> str:
         pass
 
-    def read_in(self) -> None:
-        pass
+    def parse(self, raw_variable_dict: dict, variable_file_path: str) -> None:
+        self.variable_name = raw_variable_dict.keys()[0]
+        self.file_path = variable_file_path
+        for attribute in raw_variable_dict[self.variable_name]:
+            match attribute:
+                case "description":
+                    self.description = raw_variable_dict[self.variable_name][attribute]
+                case "type":
+                    self.type = raw_variable_dict[self.variable_name][attribute]
+                case "default":
+                    self.default = raw_variable_dict[self.variable_name][attribute]
+                case "validation":
+                    self.validation = raw_variable_dict[self.variable_name][attribute]

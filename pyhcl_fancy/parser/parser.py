@@ -116,7 +116,13 @@ class FancyParser:
                             )
                             file_node.blocks.append(output_block)
                     case "variable":
-                        continue
+                        for variable in self.terraform_content[file][block_type]:
+                            variable_block = VariableBlock()
+                            variable_block.parse(
+                                raw_variable_dict=variable,
+                                variable_file_path=file
+                            )
+                            file_node.blocks.append(variable_block)
                     case "local":
                         continue
                     case "provider":
