@@ -111,6 +111,20 @@ class CollectionTree:
     
 
     def move_node(self, source: Node, destination: Node, caller: ModuleBlock) -> Node:
+        """
+        Moves a node from one location to another in the collection tree.
+
+        Args:
+            source (Node): The node to be moved.
+            destination (Node): The node to which the source node is to be moved.
+            caller (ModuleBlock): The caller of the move operation.
+
+        Returns:
+            Node: A reference to the moved node.
+
+        Raises:
+            InvalidMoveLocationError: If the source and destination nodes have the same directory status or if the destination node is already the parent of the source node.
+        """
         if source == destination:
             raise InvalidMoveLocationError("Cannot move a node to itself.")
         elif source.parent == destination:
@@ -130,8 +144,4 @@ class CollectionTree:
                 else:
                     destination.submodule_state_path = f"{curr_parent.submodule_state_path}.module.{caller.module_name}"
 
-    def _increment_height(self) -> None:
-        self.height += 1
-
-    def _set_is_flat(self) -> None:
-        self.is_flat = self.height == 1
+        return source
