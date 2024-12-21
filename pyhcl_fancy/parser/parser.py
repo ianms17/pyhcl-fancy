@@ -68,7 +68,40 @@ class FancyParser:
 
     
     def parse(self):
-        # preprocess
+        """
+        Parses the Terraform content and constructs the collection tree.
+
+        This function iterates over all files in the Terraform content and
+        parses the blocks in each file. It uses a switch case to apply a ruleset
+        based on the type of block. The ruleset is as follows:
+
+        * For each module block, it initializes a new ModuleBlock and parses
+          the raw module dictionary. It then checks if the module source points
+          to a submodule, and if so, moves the submodule's directory node to the
+          calling module's file node.
+        * For each resource block, it initializes a new ResourceBlock and parses
+          the raw resource dictionary.
+        * For each data block, it initializes a new DataBlock and parses the raw
+          data dictionary.
+        * For each output block, it initializes a new OutputBlock and parses the
+          raw output dictionary.
+        * For each variable block, it initializes a new VariableBlock and parses
+          the raw variable dictionary.
+        * For each local block, it initializes a new LocalBlock and parses the
+          raw locals dictionary.
+        * For each provider block, it initializes a new ProviderBlock and parses
+          the raw provider dictionary.
+        * For each terraform block, it initializes a new TerraformMetaBlock and
+          parses the raw meta dictionary.
+        * If an unexpected block type is found, it raises an UnexpectedTerraformBlockError.
+
+        Returns:
+            None
+
+        Notes:
+            This function represents the primary API for this library and will
+            be the main entrypoint that calling applications will use.
+        """
         self._read_tf_files()
         self.construct_empty_tree()
 
@@ -156,9 +189,30 @@ class FancyParser:
 
 
     def _read_tf_files(self) -> None:
+        """
+        Reads and loads all Terraform files from the specified directory.
+
+        This function utilizes the `_open_all_tf_files` utility to open
+        and parse all Terraform files in the provided directory. The parsed
+        content is then stored in the `terraform_content` attribute as a
+        dictionary mapping file paths to their content.
+
+        Returns:
+            None
+        """
         self.terraform_content = _open_all_tf_files(self.terraform_directory)
 
     def _set_tree_root(self) -> Node:
+        """
+        Initializes the root node of the collection tree.
+
+        This function creates a Node object that is marked as the root of the
+        collection tree. The root node is a directory node with its file path
+        set to the provided Terraform directory.
+
+        Returns:
+            Node: The root node of the collection tree.
+        """
         root = Node()
         root.is_root = True
         root.is_directory = True
