@@ -12,11 +12,22 @@ class OutputBlock(TerraformBlock):
             description (str): The description of the output variable.
         """
         super().__init__()
+        self.name: str = ""
         self.value: Any = None
         self.description: str = ""
+        self.options: dict = {}
 
     def convert_to_hcl(self) -> str:
         pass
 
-    def read_in(self) -> None:
-        pass
+    def parse(self, raw_output_dict: dict, output_file_path: str) -> None:
+        self.name = raw_output_dict.keys()[0]
+        self.file_path = output_file_path
+        for attribute in raw_output_dict[self.name]:
+            match attribute:
+                case "value":
+                    self.value = raw_output_dict[self.name][attribute]
+                case "description":
+                    self.description = raw_output_dict[self.name][attribute]
+                case _:
+                    self.options[attribute] = raw_output_dict[self.name][attribute]

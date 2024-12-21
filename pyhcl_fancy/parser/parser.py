@@ -97,6 +97,7 @@ class FancyParser:
                                 raw_resource_dict=resource,
                                 resource_file_path=file
                             )
+                            file_node.blocks.append(resource_block)
                     case "data":
                         for data in self.terraform_content[file][block_type]:
                             data_block = DataBlock()
@@ -105,8 +106,15 @@ class FancyParser:
                                 data_file_path=file,
                                 parent_file_node=file_node
                             )
+                            file_node.blocks.append(data_block)
                     case "output":
-                        continue
+                        for output in self.terraform_content[file][block_type]:
+                            output_block = OutputBlock()
+                            output_block.parse(
+                                raw_output_dict=output,
+                                output_file_path=file
+                            )
+                            file_node.blocks.append(output_block)
                     case "variable":
                         continue
                     case "local":
