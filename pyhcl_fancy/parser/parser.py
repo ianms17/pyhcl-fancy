@@ -98,7 +98,13 @@ class FancyParser:
                                 resource_file_path=file
                             )
                     case "data":
-                        continue
+                        for data in self.terraform_content[file][block_type]:
+                            data_block = DataBlock()
+                            data_block.parse(
+                                raw_data_dict=data,
+                                data_file_path=file,
+                                parent_file_node=file_node
+                            )
                     case "output":
                         continue
                     case "variable":
