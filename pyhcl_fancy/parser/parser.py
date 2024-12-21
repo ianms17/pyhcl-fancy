@@ -4,6 +4,7 @@ from pyhcl_fancy.collection_tree.node import Node
 from pyhcl_fancy.collection_tree.tree import CollectionTree
 from pyhcl_fancy.collection_tree.exceptions import DirectoryNodeNotFoundError
 
+
 from pyhcl_fancy.blocks.real.data.data_block import DataBlock
 from pyhcl_fancy.blocks.real.module.module_block import ModuleBlock
 from pyhcl_fancy.blocks.real.resource.resource_block import ResourceBlock
@@ -14,6 +15,7 @@ from pyhcl_fancy.blocks.reference.local.local_block import LocalBlock
 from pyhcl_fancy.blocks.reference.variable.variable_block import VariableBlock
 
 from pyhcl_fancy.parser.utils import _open_all_tf_files
+from pyhcl_fancy.parser.exceptions import UnexpectedTerraformBlockError
 
 
 class FancyParser:
@@ -140,6 +142,10 @@ class FancyParser:
                     case "terraform":
                         for meta in self.terraform_content[file][block_type]:
                             meta_block = TerraformMetaBlock()
+                    case _:
+                        raise UnexpectedTerraformBlockError(
+                            f"Found unexpected Terraform block type {block_type} in file {file}"
+                        )
                     
 
 
