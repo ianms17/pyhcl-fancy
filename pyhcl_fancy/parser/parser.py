@@ -80,7 +80,7 @@ class FancyParser:
                         for module in self.terraform_content[file][block_type]:
                             module_block = ModuleBlock()
                             module_block.parse(
-                                module_content=module,
+                                raw_module_dict=module,
                                 module_file_path=file
                             )
                             file_node.blocks.append(module_block)
@@ -91,7 +91,12 @@ class FancyParser:
                             self.collection_tree.move_node(submodule_directory_node, file_node, module_block)
 
                     case "resource":
-                        continue
+                        for resource in self.terraform_content[file][block_type]:
+                            resource_block = ResourceBlock()
+                            resource_block.parse(
+                                raw_resource_dict=resource,
+                                resource_file_path=file
+                            )
                     case "data":
                         continue
                     case "output":

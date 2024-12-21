@@ -1,4 +1,5 @@
 from pyhcl_fancy.blocks.real.real_block import RealBlock
+from pyhcl_fancy.collection_tree.node import Node
 
 
 class ResourceBlock(RealBlock):
@@ -17,5 +18,13 @@ class ResourceBlock(RealBlock):
     def convert_to_hcl(self) -> str:
         pass
 
-    def read_in(self) -> None:
-        pass
+    def parse(self, raw_resource_dict: dict, resource_file_path: str, file_node: Node) -> None:
+        self.resource_type = raw_resource_dict.keys()[0]
+        self.resource_name = raw_resource_dict[self.resource_type].keys()[0]
+        if file_node.submodule_state_path == None:
+            self.state_path = f"{self.resource_type}.{self.resource_name}"
+        else:
+            self.state_path = f"{file_node.submodule_state_path}.{self.resource_type}.{self.resource_name}"
+        self.file_path = resource_file_path
+        for attribute in raw_resource_dict[self.resource_type][self.resource_name]:
+            self.content[attribute] = raw_resource_dict[self.resource_type][self.resource_name][attribute]
