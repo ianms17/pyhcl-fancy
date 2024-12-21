@@ -15,5 +15,7 @@ class LocalBlock(TerraformBlock):
     def convert_to_hcl(self) -> str:
         pass
 
-    def read_in(self) -> str:
-        pass
+    def parse(self, raw_locals_dict: dict, locals_file_path: str) -> str:
+        self.file_path = locals_file_path
+        self.content = raw_locals_dict
+        

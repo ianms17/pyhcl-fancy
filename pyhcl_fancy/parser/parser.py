@@ -124,7 +124,12 @@ class FancyParser:
                             )
                             file_node.blocks.append(variable_block)
                     case "local":
-                        continue
+                        local_block = LocalBlock()
+                        local_block.parse(
+                            raw_locals_dict=self.terraform_content[file][block_type],
+                            locals_file_path=file
+                        )
+                        file_node.blocks.append(local_block)
                     case "provider":
                         continue
                     case "terraform":
