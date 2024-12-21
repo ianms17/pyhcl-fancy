@@ -138,7 +138,8 @@ class FancyParser:
                                 provider_file_path=file
                             )
                     case "terraform":
-                        continue
+                        for meta in self.terraform_content[file][block_type]:
+                            meta_block = TerraformMetaBlock()
                     
 
 
