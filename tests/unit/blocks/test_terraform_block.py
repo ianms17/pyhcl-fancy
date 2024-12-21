@@ -1,0 +1,1 @@
+from pyhcl_fancy.blocks.terraform_block import TerraformBlock
