@@ -20,6 +20,18 @@ from pyhcl_fancy.parser.exceptions import UnexpectedTerraformBlockError
 
 class FancyParser:
     def __init__(self, terraform_directory: str):
+        """
+        Initializes a new instance of the FancyParser class.
+
+        Args:
+            terraform_directory (str): The path to the directory containing Terraform files.
+
+        Attributes:
+            terraform_directory (str): The path to the directory containing Terraform files.
+            terraform_content (dict): A dictionary mapping file paths to their parsed content.
+            collection_tree (CollectionTree): The collection tree containing the directory and file nodes.
+        """
+        
         self.terraform_directory = terraform_directory
         self.terraform_content: dict = {}
         self.collection_tree: CollectionTree = CollectionTree()
