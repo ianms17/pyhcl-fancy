@@ -34,7 +34,7 @@ class ModuleBlock(RealBlock):
 
         self.module_name = raw_module_dict.keys()[0]
         self.file_path = module_file_path
-        if parent_file_node.submodule_state_path == None:
+        if parent_file_node.submodule_state_path is None:
             self.state_path = f"module.{self.module_name}"
         else:
             self.state_path = parent_file_node.submodule_state_path

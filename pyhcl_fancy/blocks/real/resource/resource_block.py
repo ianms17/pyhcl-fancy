@@ -33,7 +33,7 @@ class ResourceBlock(RealBlock):
 
         self.resource_type = raw_resource_dict.keys()[0]
         self.resource_name = raw_resource_dict[self.resource_type].keys()[0]
-        if file_node.submodule_state_path == None:
+        if file_node.submodule_state_path is None:
             self.state_path = f"{self.resource_type}.{self.resource_name}"
         else:
             self.state_path = f"{file_node.submodule_state_path}.{self.resource_type}.{self.resource_name}"

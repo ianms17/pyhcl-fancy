@@ -1,5 +1,4 @@
 from pyhcl_fancy.collection_tree.node import Node
-from pyhcl_fancy.parser.parser import FancyParser
 from pyhcl_fancy.blocks.real.module.module_block import ModuleBlock
 from pyhcl_fancy.collection_tree.exceptions import (
     FileNodeNotFoundError,
