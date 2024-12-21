@@ -80,9 +80,8 @@ class FancyParser:
                         for module in self.terraform_content[file][block_type]:
                             module_block = ModuleBlock()
                             module_block.parse(
-                                module_name=module,
-                                module_file_path=file,
-                                module_content=self.terraform_content[file][block_type][module],
+                                module_content=module,
+                                module_file_path=file
                             )
                             file_node.blocks.append(module_block)
 
