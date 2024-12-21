@@ -19,7 +19,9 @@ class ModuleBlock(RealBlock):
     def convert_to_hcl(self) -> str:
         pass
 
-    def parse(self, raw_module_dict: dict, module_file_path: str, parent_file_node: Node) -> None:
+    def parse(
+        self, raw_module_dict: dict, module_file_path: str, parent_file_node: Node
+    ) -> None:
         """
         Parses the raw_module_dict to set the ModuleBlock's fields.
 
@@ -45,4 +47,6 @@ class ModuleBlock(RealBlock):
                 case "version":
                     self.module_version = raw_module_dict[self.module_name][attribute]
                 case _:
-                    self.content[attribute] = raw_module_dict[self.module_name][attribute]
+                    self.content[attribute] = raw_module_dict[self.module_name][
+                        attribute
+                    ]

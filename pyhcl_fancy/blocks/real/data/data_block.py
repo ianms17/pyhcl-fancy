@@ -18,7 +18,9 @@ class DataBlock(RealBlock):
     def convert_to_hcl(self) -> str:
         pass
 
-    def parse(self, raw_data_dict: dict, data_file_path: str, parent_file_node: Node) -> None:
+    def parse(
+        self, raw_data_dict: dict, data_file_path: str, parent_file_node: Node
+    ) -> None:
         """
         Parses the raw_data_dict dictionary and sets the DataBlock's fields.
 
@@ -30,7 +32,7 @@ class DataBlock(RealBlock):
         Returns:
             None
         """
-        
+
         self.data_type = raw_data_dict.keys()[0]
         self.data_name = raw_data_dict[self.data_type].keys()[0]
         self.file_path = data_file_path
@@ -39,4 +41,6 @@ class DataBlock(RealBlock):
         else:
             self.state_path = f"{parent_file_node.submodule_state_path}.data.{self.data_type}.{self.data_name}"
         for attribute in raw_data_dict[self.data_type][self.data_name]:
-            self.content[attribute] = raw_data_dict[self.data_type][self.data_name][attribute]
+            self.content[attribute] = raw_data_dict[self.data_type][self.data_name][
+                attribute
+            ]

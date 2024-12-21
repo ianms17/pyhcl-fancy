@@ -31,7 +31,7 @@ class OutputBlock(TerraformBlock):
         Returns:
             None
         """
-        
+
         self.name = raw_output_dict.keys()[0]
         self.file_path = output_file_path
         for attribute in raw_output_dict[self.name]:

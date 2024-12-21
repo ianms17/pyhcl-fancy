@@ -18,7 +18,9 @@ class ResourceBlock(RealBlock):
     def convert_to_hcl(self) -> str:
         pass
 
-    def parse(self, raw_resource_dict: dict, resource_file_path: str, file_node: Node) -> None:
+    def parse(
+        self, raw_resource_dict: dict, resource_file_path: str, file_node: Node
+    ) -> None:
         """
         Parses the raw_resource_dict to set the ResourceBlock's fields.
 
@@ -39,4 +41,6 @@ class ResourceBlock(RealBlock):
             self.state_path = f"{file_node.submodule_state_path}.{self.resource_type}.{self.resource_name}"
         self.file_path = resource_file_path
         for attribute in raw_resource_dict[self.resource_type][self.resource_name]:
-            self.content[attribute] = raw_resource_dict[self.resource_type][self.resource_name][attribute]
+            self.content[attribute] = raw_resource_dict[self.resource_type][
+                self.resource_name
+            ][attribute]

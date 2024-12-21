@@ -31,11 +31,10 @@ class FancyParser:
             terraform_content (dict): A dictionary mapping file paths to their parsed content.
             collection_tree (CollectionTree): The collection tree containing the directory and file nodes.
         """
-        
+
         self.terraform_directory = terraform_directory
         self.terraform_content: dict = {}
         self.collection_tree: CollectionTree = CollectionTree()
-
 
     def construct_empty_tree(self) -> CollectionTree:
         """
@@ -62,7 +61,9 @@ class FancyParser:
                 try:
                     # directory path is everything but the last element
                     directory_path = file.split("/")[:-1]
-                    directory_node = self.collection_tree.find_directory_node(root, directory_path)
+                    directory_node = self.collection_tree.find_directory_node(
+                        root, directory_path
+                    )
                 # if directory node isn't found, create it
                 except DirectoryNodeNotFoundError:
                     directory_node = Node()
@@ -75,10 +76,7 @@ class FancyParser:
             file_node = Node()
             file_node.relative_file_path = file
             directory_node.add_child(file_node)
-            
-        
 
-    
     def parse(self):
         """
         Parses the Terraform content and constructs the collection tree.
@@ -118,8 +116,10 @@ class FancyParser:
         self.construct_empty_tree()
 
         for file in self.terraform_content:
-            file_node = self.collection_tree.find_file_node(self.collection_tree.root, file)
-            
+            file_node = self.collection_tree.find_file_node(
+                self.collection_tree.root, file
+            )
+
             for block_type in self.terraform_content[file]:
                 # switch case to apply a ruleset based on the type of block
                 match block_type:
@@ -127,22 +127,27 @@ class FancyParser:
                         for module in self.terraform_content[file][block_type]:
                             module_block = ModuleBlock()
                             module_block.parse(
-                                raw_module_dict=module,
-                                module_file_path=file
+                                raw_module_dict=module, module_file_path=file
                             )
                             file_node.blocks.append(module_block)
 
                         # module source points to a submodule, move that submodules directory node to the calling module's file node
                         if Path(module_block.module_source).is_dir():
-                            submodule_directory_node = self.collection_tree.find_directory_node(self.collection_tree.root, module_block.module_source)
-                            self.collection_tree.move_node(submodule_directory_node, file_node, module_block)
+                            submodule_directory_node = (
+                                self.collection_tree.find_directory_node(
+                                    self.collection_tree.root,
+                                    module_block.module_source,
+                                )
+                            )
+                            self.collection_tree.move_node(
+                                submodule_directory_node, file_node, module_block
+                            )
 
                     case "resource":
                         for resource in self.terraform_content[file][block_type]:
                             resource_block = ResourceBlock()
                             resource_block.parse(
-                                raw_resource_dict=resource,
-                                resource_file_path=file
+                                raw_resource_dict=resource, resource_file_path=file
                             )
                             file_node.blocks.append(resource_block)
                     case "data":
@@ -151,54 +156,46 @@ class FancyParser:
                             data_block.parse(
                                 raw_data_dict=data,
                                 data_file_path=file,
-                                parent_file_node=file_node
+                                parent_file_node=file_node,
                             )
                             file_node.blocks.append(data_block)
                     case "output":
                         for output in self.terraform_content[file][block_type]:
                             output_block = OutputBlock()
                             output_block.parse(
-                                raw_output_dict=output,
-                                output_file_path=file
+                                raw_output_dict=output, output_file_path=file
                             )
                             file_node.blocks.append(output_block)
                     case "variable":
                         for variable in self.terraform_content[file][block_type]:
                             variable_block = VariableBlock()
                             variable_block.parse(
-                                raw_variable_dict=variable,
-                                variable_file_path=file
+                                raw_variable_dict=variable, variable_file_path=file
                             )
                             file_node.blocks.append(variable_block)
                     case "local":
                         local_block = LocalBlock()
                         local_block.parse(
                             raw_locals_dict=self.terraform_content[file][block_type],
-                            locals_file_path=file
+                            locals_file_path=file,
                         )
                         file_node.blocks.append(local_block)
                     case "provider":
                         for provider in self.terraform_content[file][block_type]:
                             provider_block = ProviderBlock()
                             provider_block.parse(
-                                raw_provider_dict=provider,
-                                provider_file_path=file
+                                raw_provider_dict=provider, provider_file_path=file
                             )
                             file_node.blocks.append(provider_block)
                     case "terraform":
                         for meta in self.terraform_content[file][block_type]:
                             meta_block = TerraformMetaBlock()
-                            meta_block.parse(
-                                raw_meta_dict=meta,
-                                meta_file_path=file
-                            )
+                            meta_block.parse(raw_meta_dict=meta, meta_file_path=file)
                             file_node.blocks.append(meta_block)
                     case _:
                         raise UnexpectedTerraformBlockError(
                             f"Found unexpected Terraform block type {block_type} in file {file}"
                         )
-                    
-
 
     def _read_tf_files(self) -> None:
         """

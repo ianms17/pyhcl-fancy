@@ -28,4 +28,3 @@ class LocalBlock(TerraformBlock):
         """
         self.file_path = locals_file_path
         self.content = raw_locals_dict
-        

@@ -3,8 +3,8 @@ from pyhcl_fancy.blocks.real.module.module_block import ModuleBlock
 from pyhcl_fancy.collection_tree.exceptions import (
     FileNodeNotFoundError,
     DirectoryNodeNotFoundError,
-    InvalidMoveLocationError
-) 
+    InvalidMoveLocationError,
+)
 
 
 class CollectionTree:
@@ -34,7 +34,6 @@ class CollectionTree:
         if self.root is None:
             self.root = node
         return self.root
-
 
     def add_node_to_directory(self, directory: str, child: Node) -> Node:
         """
@@ -83,8 +82,10 @@ class CollectionTree:
                 if child.is_leaf:
                     continue
                 return self.find_directory_node(child, directory)
-        
-        raise DirectoryNodeNotFoundError(f"The directory {directory} was not found in the collection tree.")
+
+        raise DirectoryNodeNotFoundError(
+            f"The directory {directory} was not found in the collection tree."
+        )
 
     def find_file_node(self, node: Node, file_path: str) -> Node:
         """
@@ -105,9 +106,10 @@ class CollectionTree:
                 if child.is_leaf:
                     continue
                 return self.find_file_node(child, file_path)
-            
-        raise FileNodeNotFoundError(f"The file {file_path} was not found in the collection tree.")
-    
+
+        raise FileNodeNotFoundError(
+            f"The file {file_path} was not found in the collection tree."
+        )
 
     def move_node(self, source: Node, destination: Node, caller: ModuleBlock) -> Node:
         """
@@ -127,12 +129,14 @@ class CollectionTree:
         if source == destination:
             raise InvalidMoveLocationError("Cannot move a node to itself.")
         elif source.parent == destination:
-            raise InvalidMoveLocationError("The destination node is already the parent of the source node.")
+            raise InvalidMoveLocationError(
+                "The destination node is already the parent of the source node."
+            )
         elif source.is_directory == destination.is_directory:
             raise InvalidMoveLocationError(
                 f"The source and destination nodes must not have the same directory status. Both nodes have directory status {source.is_directory}."
             )
-        
+
         curr_parent = source.parent
         for child in curr_parent.children:
             if child == source:

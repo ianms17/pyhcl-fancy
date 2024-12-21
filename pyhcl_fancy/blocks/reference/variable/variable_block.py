@@ -35,7 +35,7 @@ class VariableBlock(TerraformBlock):
         Returns:
             None
         """
-        
+
         self.variable_name = raw_variable_dict.keys()[0]
         self.file_path = variable_file_path
         for attribute in raw_variable_dict[self.variable_name]:
