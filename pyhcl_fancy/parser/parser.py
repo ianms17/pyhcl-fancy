@@ -139,9 +139,15 @@ class FancyParser:
                                 raw_provider_dict=provider,
                                 provider_file_path=file
                             )
+                            file_node.blocks.append(provider_block)
                     case "terraform":
                         for meta in self.terraform_content[file][block_type]:
                             meta_block = TerraformMetaBlock()
+                            meta_block.parse(
+                                raw_meta_dict=meta,
+                                meta_file_path=file
+                            )
+                            file_node.blocks.append(meta_block)
                     case _:
                         raise UnexpectedTerraformBlockError(
                             f"Found unexpected Terraform block type {block_type} in file {file}"
