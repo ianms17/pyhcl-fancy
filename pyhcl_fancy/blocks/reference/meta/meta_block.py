@@ -20,6 +20,23 @@ class TerraformMetaBlock(TerraformBlock):
         pass
 
     def parse(self, raw_meta_dict: dict, meta_file_path: str) -> str:
+        """
+        Parses the raw meta dictionary and updates the TerraformMetaBlock attributes.
+
+        This function iterates over the settings in the raw meta dictionary and
+        updates the corresponding attributes of the TerraformMetaBlock based on
+        the setting type. It handles backend configurations by setting the backend
+        type and configuration, and also processes required providers. Any other
+        settings are stored in the options dictionary.
+
+        Args:
+            raw_meta_dict (dict): The dictionary containing raw meta settings.
+            meta_file_path (str): The path to the file containing meta configuration.
+
+        Returns:
+            None
+        """
+
         for setting in raw_meta_dict:
             match setting:
                 case "backend":

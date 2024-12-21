@@ -20,6 +20,18 @@ class ModuleBlock(RealBlock):
         pass
 
     def parse(self, raw_module_dict: dict, module_file_path: str, parent_file_node: Node) -> None:
+        """
+        Parses the raw_module_dict to set the ModuleBlock's fields.
+
+        Args:
+            raw_module_dict (dict): The raw dictionary from the terraform file for the module block.
+            module_file_path (str): The path of the file where the module block is defined.
+            parent_file_node (Node): The parent node in the collection tree.
+
+        Returns:
+            None
+        """
+
         self.module_name = raw_module_dict.keys()[0]
         self.file_path = module_file_path
         if parent_file_node.submodule_state_path == None:

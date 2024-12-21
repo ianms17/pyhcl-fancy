@@ -19,6 +19,18 @@ class ResourceBlock(RealBlock):
         pass
 
     def parse(self, raw_resource_dict: dict, resource_file_path: str, file_node: Node) -> None:
+        """
+        Parses the raw_resource_dict to set the ResourceBlock's fields.
+
+        Args:
+            raw_resource_dict (dict): The raw dictionary from the terraform file for the resource block.
+            resource_file_path (str): The path of the file where the resource block is defined.
+            file_node (Node): The node representing the file in the collection tree.
+
+        Returns:
+            None
+        """
+
         self.resource_type = raw_resource_dict.keys()[0]
         self.resource_name = raw_resource_dict[self.resource_type].keys()[0]
         if file_node.submodule_state_path == None:

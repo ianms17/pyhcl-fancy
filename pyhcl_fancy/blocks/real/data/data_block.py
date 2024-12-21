@@ -19,6 +19,18 @@ class DataBlock(RealBlock):
         pass
 
     def parse(self, raw_data_dict: dict, data_file_path: str, parent_file_node: Node) -> None:
+        """
+        Parses the raw_data_dict dictionary and sets the DataBlock's fields.
+
+        Args:
+            raw_data_dict (dict): The raw dictionary from the terraform file for the data block.
+            data_file_path (str): The path of the file where the data block is defined.
+            parent_file_node (Node): The parent node in the collection tree.
+
+        Returns:
+            None
+        """
+        
         self.data_type = raw_data_dict.keys()[0]
         self.data_name = raw_data_dict[self.data_type].keys()[0]
         self.file_path = data_file_path

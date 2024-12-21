@@ -25,6 +25,17 @@ class VariableBlock(TerraformBlock):
         pass
 
     def parse(self, raw_variable_dict: dict, variable_file_path: str) -> None:
+        """
+        Parses the raw_variable_dict dictionary and sets the VariableBlock's fields.
+
+        Args:
+            raw_variable_dict (dict): The raw dictionary from the terraform file for the variable block.
+            variable_file_path (str): The path of the file where the variable block is defined.
+
+        Returns:
+            None
+        """
+        
         self.variable_name = raw_variable_dict.keys()[0]
         self.file_path = variable_file_path
         for attribute in raw_variable_dict[self.variable_name]:

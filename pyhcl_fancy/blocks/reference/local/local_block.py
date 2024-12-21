@@ -16,6 +16,16 @@ class LocalBlock(TerraformBlock):
         pass
 
     def parse(self, raw_locals_dict: dict, locals_file_path: str) -> str:
+        """
+        Parses the raw locals dictionary and sets the content of the LocalBlock.
+
+        Args:
+            raw_locals_dict (dict): The raw locals dictionary to parse.
+            locals_file_path (str): The path of the file containing the locals block.
+
+        Returns:
+            str: The parsed content of the locals block.
+        """
         self.file_path = locals_file_path
         self.content = raw_locals_dict
         

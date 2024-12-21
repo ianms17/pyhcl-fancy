@@ -25,6 +25,17 @@ class ProviderBlock(TerraformBlock):
         pass
 
     def parse(self, raw_provider_dict: dict, provider_file_path: str) -> None:
+        """
+        Parses the raw_provider_dict to set the ProviderBlock's fields.
+
+        Args:
+            raw_provider_dict (dict): The raw dictionary from the terraform file for the provider block.
+            provider_file_path (str): The path of the file where the provider block is defined.
+
+        Returns:
+            None
+        """
+
         self.type = raw_provider_dict.keys()[0]
         self.file_path = provider_file_path
         for attribute in raw_provider_dict[self.type]:
