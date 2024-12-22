@@ -1,2 +1,3 @@
 .ruff_cache
 .local
+*__pycache__
