@@ -1,7 +1,7 @@
-from pyhcl_fancy.blocks.terraform_block import Block
+from pyhcl_fancy.blocks.terraform_block import TerraformBlock
 
 
-class RealBlock(Block):
+class RealBlock(TerraformBlock):
     def __init__(self):
         """
         Initializes a new instance of the RealBlock class.
