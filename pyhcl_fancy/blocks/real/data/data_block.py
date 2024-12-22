@@ -10,13 +10,17 @@ class DataBlock(RealBlock):
         Attributes:
             data_type (str): The type of the data block.
             data_name (str): The name of the data block.
+
+        Inherited Attributes:
+            state_path (str): The state path of the block.
+            count (int): The count of the block.
+            for_each (list | dict): The for_each of the block.
+            content (dict): The content of the block.
         """
         super().__init__()
         self.data_type: str = ""
         self.data_name: str = ""
 
-    def convert_to_hcl(self) -> str:
-        pass
 
     def parse(
         self, raw_data_dict: dict, data_file_path: str, parent_file_node: Node
