@@ -19,3 +19,4 @@ def sample_file_node() -> Node:
 def submodule_file_node() -> Node:
     node = Node()
     node.submodule_state_path = "module.test_module"
+    return node
