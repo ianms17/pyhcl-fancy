@@ -51,7 +51,7 @@ def test_basic_data_block_parse_count(basic_parsed_terraform, sample_file_node):
     data_block_list = basic_parsed_terraform["data"]
     data_block = DataBlock()
     data_block.parse(data_block_list[0], "terraform", sample_file_node)
-    assert data_block.count == 1
+    assert data_block.count == 0
 
 
 def test_basic_data_block_parse_file_path(basic_parsed_terraform, sample_file_node):

@@ -37,8 +37,8 @@ class DataBlock(RealBlock):
             None
         """
 
-        self.data_type = raw_data_dict.keys()[0]
-        self.data_name = raw_data_dict[self.data_type].keys()[0]
+        self.data_type = list(raw_data_dict.keys())[0]
+        self.data_name = list(raw_data_dict[self.data_type].keys())[0]
         self.file_path = data_file_path
         if parent_file_node.submodule_state_path is None:
             self.state_path = f"data.{self.data_type}.{self.data_name}"
