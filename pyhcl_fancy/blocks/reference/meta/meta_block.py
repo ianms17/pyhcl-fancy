@@ -13,7 +13,7 @@ class TerraformMetaBlock(TerraformBlock):
         super().__init__()
         self.backend_type: str = ""
         self.backend_config: dict = {}
-        self.required_providers: dict = {}
+        self.required_providers: list[dict] = []
         self.options: dict = {}
 
     def convert_to_hcl(self) -> str:
@@ -37,11 +37,16 @@ class TerraformMetaBlock(TerraformBlock):
             None
         """
 
+        self.file_path = meta_file_path
         for setting in raw_meta_dict:
             match setting:
                 case "backend":
-                    self.backend_type = raw_meta_dict[setting].keys()[0]
-                    self.backend_config = raw_meta_dict[setting][self.backend_type]
+                    if len(raw_meta_dict[setting]) > 1:
+                        raise ValueError(
+                            f"Invalid backend configuration: multiple backends found in {meta_file_path}"
+                        )
+                    self.backend_type = list(raw_meta_dict[setting][0].keys())[0]
+                    self.backend_config = raw_meta_dict[setting][0][self.backend_type]
                 case "required_providers":
                     self.required_providers = raw_meta_dict[setting]
                 case _:
