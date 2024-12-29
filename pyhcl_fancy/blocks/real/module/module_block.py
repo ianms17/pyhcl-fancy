@@ -16,8 +16,6 @@ class ModuleBlock(RealBlock):
         self.module_source: str = ""
         self.module_version: str = ""
 
-    def convert_to_hcl(self) -> str:
-        pass
 
     def parse(
         self, raw_module_dict: dict, module_file_path: str, parent_file_node: Node
@@ -34,7 +32,7 @@ class ModuleBlock(RealBlock):
             None
         """
 
-        self.module_name = raw_module_dict.keys()[0]
+        self.module_name = list(raw_module_dict.keys())[0]
         self.file_path = module_file_path
         if parent_file_node.submodule_state_path is None:
             self.state_path = f"module.{self.module_name}"
