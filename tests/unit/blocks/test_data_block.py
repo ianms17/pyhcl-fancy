@@ -9,7 +9,7 @@ def test_data_block_init():
     assert block.state_path == ""
     assert block.content == {}
     assert block.for_each is None
-    assert block.count == 0
+    assert block.count is None
 
 
 def test_basic_data_block_parse_data_name(basic_parsed_terraform, sample_file_node):

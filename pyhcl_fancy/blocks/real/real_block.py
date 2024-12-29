@@ -14,6 +14,6 @@ class RealBlock(TerraformBlock):
         """
         super().__init__()
         self.state_path: str = ""
-        self.count: int = 0
+        self.count: int = None
         self.for_each: list | dict = None
         self.content: dict = {}
