@@ -37,7 +37,7 @@ class ModuleBlock(RealBlock):
         if parent_file_node.submodule_state_path is None:
             self.state_path = f"module.{self.module_name}"
         else:
-            self.state_path = parent_file_node.submodule_state_path
+            self.state_path = f"{parent_file_node.submodule_state_path}.module.{self.module_name}"
         for attribute in raw_module_dict[self.module_name]:
             match attribute:
                 case "source":

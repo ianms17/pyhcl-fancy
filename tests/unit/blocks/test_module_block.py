@@ -73,3 +73,10 @@ def test_module_block_parse_for_each(basic_parsed_terraform, sample_file_node):
     module_block = ModuleBlock()
     module_block.parse(raw_module_dict[0], "terraform", sample_file_node)
     assert module_block.for_each is None
+
+
+def test_module_block_parse_state_path_nested_module(basic_parsed_terraform, submodule_file_node):
+    raw_module_dict = basic_parsed_terraform["module"]
+    module_block = ModuleBlock()    
+    module_block.parse(raw_module_dict[0], "terraform", submodule_file_node)
+    assert module_block.state_path == "module.test_module.module.lambda_function"
