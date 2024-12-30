@@ -11,6 +11,14 @@ def basic_parsed_terraform() -> dict:
     
 
 @pytest.fixture
+def raw_terraform_block():
+    def _terraform_block(file_path: str, block_type: str) -> dict:
+        with open(f"tests/unit/sample_terraform/{file_path}", "r") as f:
+            return hcl2.load(f)[block_type]
+    return _terraform_block
+    
+
+@pytest.fixture
 def sample_file_node() -> Node:
     return Node()
 
