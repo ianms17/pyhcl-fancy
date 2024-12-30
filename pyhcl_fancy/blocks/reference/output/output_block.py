@@ -17,8 +17,6 @@ class OutputBlock(TerraformBlock):
         self.description: str = ""
         self.options: dict = {}
 
-    def convert_to_hcl(self) -> str:
-        pass
 
     def parse(self, raw_output_dict: dict, output_file_path: str) -> None:
         """
@@ -32,7 +30,7 @@ class OutputBlock(TerraformBlock):
             None
         """
 
-        self.name = raw_output_dict.keys()[0]
+        self.name = list(raw_output_dict.keys())[0]
         self.file_path = output_file_path
         for attribute in raw_output_dict[self.name]:
             match attribute:
