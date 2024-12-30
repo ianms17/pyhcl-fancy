@@ -10,13 +10,17 @@ class ResourceBlock(RealBlock):
         Attributes:
             resource_type (str): The type of the resource.
             resource_name (str): The name of the resource.
+
+        Inherited Attributes:
+            state_path (str): The state path of the block.
+            count (int): The count of the block.
+            for_each (list | dict): The for_each of the block.
+            content (dict): The content of the block.
         """
         super().__init__()
         self.resource_type: str = ""
         self.resource_name: str = ""
 
-    def convert_to_hcl(self) -> str:
-        pass
 
     def parse(
         self, raw_resource_dict: dict, resource_file_path: str, file_node: Node
@@ -33,8 +37,8 @@ class ResourceBlock(RealBlock):
             None
         """
 
-        self.resource_type = raw_resource_dict.keys()[0]
-        self.resource_name = raw_resource_dict[self.resource_type].keys()[0]
+        self.resource_type = list(raw_resource_dict.keys())[0]
+        self.resource_name = list(raw_resource_dict[self.resource_type].keys())[0]
         if file_node.submodule_state_path is None:
             self.state_path = f"{self.resource_type}.{self.resource_name}"
         else:
