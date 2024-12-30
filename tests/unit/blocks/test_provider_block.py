@@ -12,29 +12,29 @@ def test_provider_block_init():
     assert provider_block.file_path == ""
 
 
-def test_provider_block_parse_type(basic_parsed_terraform):
-    provider_block_content = basic_parsed_terraform["provider"]
+def test_provider_block_parse_type(raw_terraform_block):
+    provider_block_content = raw_terraform_block("provider/simple_provider.tf", "provider")
     provider_block = ProviderBlock()
     provider_block.parse(provider_block_content[0], "terraform")
     assert provider_block.type == "aws"
 
 
-def test_provider_block_parse_region(basic_parsed_terraform):
-    provider_block_content = basic_parsed_terraform["provider"]
+def test_provider_block_parse_region(raw_terraform_block):
+    provider_block_content = raw_terraform_block("provider/simple_provider.tf", "provider")
     provider_block = ProviderBlock()
     provider_block.parse(provider_block_content[0], "terraform")
     assert provider_block.region == "us-east-1"
 
 
-def test_provider_block_parse_alias(basic_parsed_terraform):
-    provider_block_content = basic_parsed_terraform["provider"]
+def test_provider_block_parse_alias(raw_terraform_block):
+    provider_block_content = raw_terraform_block("provider/simple_provider.tf", "provider")
     provider_block = ProviderBlock()
     provider_block.parse(provider_block_content[0], "terraform")
     assert provider_block.alias == "primary"
 
 
-def test_provider_block_parse_assume_role(basic_parsed_terraform):
-    provider_block_content = basic_parsed_terraform["provider"]
+def test_provider_block_parse_assume_role(raw_terraform_block):
+    provider_block_content = raw_terraform_block("provider/simple_provider.tf", "provider")
     provider_block = ProviderBlock()
     provider_block.parse(provider_block_content[0], "terraform")
     assert provider_block.assume_role == {
@@ -42,8 +42,8 @@ def test_provider_block_parse_assume_role(basic_parsed_terraform):
     }
 
 
-def test_provider_block_parse_default_tags(basic_parsed_terraform):
-    provider_block_content = basic_parsed_terraform["provider"]
+def test_provider_block_parse_default_tags(raw_terraform_block):
+    provider_block_content = raw_terraform_block("provider/simple_provider.tf", "provider")
     provider_block = ProviderBlock()
     provider_block.parse(provider_block_content[0], "terraform")
     assert provider_block.default_tags == {
@@ -51,8 +51,8 @@ def test_provider_block_parse_default_tags(basic_parsed_terraform):
     }
 
 
-def test_provider_block_parse_options(basic_parsed_terraform):
-    provider_block_content = basic_parsed_terraform["provider"]
+def test_provider_block_parse_options(raw_terraform_block):
+    provider_block_content = raw_terraform_block("provider/simple_provider.tf", "provider")
     provider_block = ProviderBlock()
     provider_block.parse(provider_block_content[0], "terraform")
     assert provider_block.options == {}
