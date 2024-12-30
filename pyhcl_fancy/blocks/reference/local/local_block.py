@@ -27,4 +27,5 @@ class LocalBlock(TerraformBlock):
             str: The parsed content of the locals block.
         """
         self.file_path = locals_file_path
-        self.content = raw_locals_dict
+        for local_dict in raw_locals_dict:
+            self.content.update(local_dict)
