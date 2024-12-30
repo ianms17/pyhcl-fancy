@@ -13,6 +13,9 @@ class VariableBlock(TerraformBlock):
             type (str): The type of the variable.
             default (Any): The default value of the variable.
             validation (dict): The validation rules for the variable.
+
+        Inherited Attributes:
+            file_path (str): The path of the file where the variable is defined.
         """
         super().__init__()
         self.variable_name: str = ""
@@ -36,7 +39,7 @@ class VariableBlock(TerraformBlock):
             None
         """
 
-        self.variable_name = raw_variable_dict.keys()[0]
+        self.variable_name = list(raw_variable_dict.keys())[0]
         self.file_path = variable_file_path
         for attribute in raw_variable_dict[self.variable_name]:
             match attribute:
