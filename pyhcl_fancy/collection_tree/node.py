@@ -26,17 +26,6 @@ class Node:
         self.is_leaf: bool = True
         self.submodule_state_path: str = None
 
-    def set_is_directory(self, file_path: str) -> None:
-        """
-        Sets whether the node is a directory or not, given the file path of the node.
-
-        Args:
-            file_path (str): The file path of the node.
-
-        Returns:
-            None
-        """
-        self.is_directory = _is_directory(file_path)
 
     def add_child(self, child: Self) -> None:
         """
