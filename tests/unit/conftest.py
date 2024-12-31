@@ -28,3 +28,13 @@ def submodule_file_node() -> Node:
     node = Node()
     node.submodule_state_path = "module.test_module"
     return node
+
+
+@pytest.fixture
+def parent_node() -> Node:
+    return Node()
+
+
+@pytest.fixture
+def child_node() -> Node:
+    return Node()
