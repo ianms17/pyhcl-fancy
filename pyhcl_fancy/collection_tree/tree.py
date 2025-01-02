@@ -14,12 +14,8 @@ class CollectionTree:
 
         Attributes:
             root (Node): The root node of the collection tree.
-            height (int): The height of the collection tree.
-            is_flat (bool): A flag indicating whether the tree is flat.
         """
         self.root: Node = None
-        self.height: int = 0
-        self.is_flat: bool = False
 
     def add_root(self, node: Node) -> Node:
         """
@@ -35,81 +31,53 @@ class CollectionTree:
             self.root = node
         return self.root
 
-    def add_node_to_directory(self, directory: str, child: Node) -> Node:
-        """
-        Adds a child node to a specified directory node within the collection tree.
 
-        Args:
-            directory (str): The path of the directory where the child node will be added.
-            child (Node): The child node to add to the specified directory.
-
-        Returns:
-            Node: The directory node to which the child was added.
-        """
-        directory_node = self.find_directory_node(self.root, directory)
-        return directory_node.add_child(child)
-
-    def add_submodule_directory(self, directory_node: Node, file_path: str) -> Node:
-        """
-        Adds a submodule directory to the collection tree under a specific file node.
-
-        Args:
-            directory_node (Node): The node of the directory to be added as a submodule.
-            file_path (str): The path of the file node under which the submodule is to be added.
-
-        Returns:
-            Node: The file node under which the submodule is added.
-        """
-        file_node = self.find_file_node(directory_node, file_path)
-        return file_node.add_child(directory_node)
-
-    def find_directory_node(self, node: Node, directory: str) -> Node:
+    def find_directory_node(self, node: Node, target_directory: str) -> Node:
         """
         Recursively searches for a directory node within the collection tree
         given a directory path.
 
         Args:
             node (Node): The current node to search in the collection tree.
-            directory (str): The path of the directory to search for.
+            target_directory (str): The path of the directory to search for.
 
         Returns:
             Node: The directory node if found, otherwise None.
         """
+        print(node.relative_file_path)
+
+        if node.is_directory and node.relative_file_path == target_directory:
+            return node
+        
         for child in node.children:
-            if child.is_directory and child.relative_file_path == directory:
-                return child
-            else:
-                if child.is_leaf:
-                    continue
-                return self.find_directory_node(child, directory)
+            found_node = self.find_directory_node(child, target_directory)
+            if found_node is not None:
+                return found_node
+        
+        return None
+                
 
-        raise DirectoryNodeNotFoundError(
-            f"The directory {directory} was not found in the collection tree."
-        )
-
-    def find_file_node(self, node: Node, file_path: str) -> Node:
+    def find_file_node(self, node: Node, target_file: str) -> Node:
         """
         Recursively searches for a file node within the collection tree
         given a file path.
 
         Args:
             node (Node): The current node to search in the collection tree.
-            file_path (str): The path of the file to search for.
+            target_file (str): The path of the file to search for.
 
         Returns:
             Node: The file node if found, otherwise None.
         """
-        for child in node.children:
-            if child.relative_file_path == file_path:
-                return child
-            else:
-                if child.is_leaf:
-                    continue
-                return self.find_file_node(child, file_path)
+        if not node.is_directory and node.relative_file_path == target_file:
+            return node
 
-        raise FileNodeNotFoundError(
-            f"The file {file_path} was not found in the collection tree."
-        )
+        for child in node.children:
+            found_node = self.find_file_node(child, target_file)
+            if found_node is not None:
+                return found_node
+
+        return None
 
     def move_node(self, source: Node, destination: Node, caller: ModuleBlock) -> Node:
         """
@@ -132,19 +100,24 @@ class CollectionTree:
             raise InvalidMoveLocationError(
                 "The destination node is already the parent of the source node."
             )
-        elif source.is_directory == destination.is_directory:
+        elif not source.is_directory ^ destination.is_directory:
             raise InvalidMoveLocationError(
                 f"The source and destination nodes must not have the same directory status. Both nodes have directory status {source.is_directory}."
             )
-
+        
         curr_parent = source.parent
         for child in curr_parent.children:
             if child == source:
-                curr_parent.children.remove(child)
-                destination.add_child(source)
-                if curr_parent.submodule_state_path == "":
-                    destination.submodule_state_path = f"module.{caller.module_name}"
-                else:
-                    destination.submodule_state_path = f"{curr_parent.submodule_state_path}.module.{caller.module_name}"
+                node_to_move = child
+
+        # remove node from current parent and add to new parent
+        curr_parent.children.remove(node_to_move)
+        destination.add_child(node_to_move)
+        
+        # update the submodule state path 
+        if destination.submodule_state_path == "":
+            source.submodule_state_path = f"module.{caller.module_name}"
+        else:
+            source.submodule_state_path = f"{destination.submodule_state_path}.module.{caller.module_name}"
 
         return source
