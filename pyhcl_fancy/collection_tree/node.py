@@ -1,6 +1,5 @@
 from typing import Self
 from pyhcl_fancy.blocks.terraform_block import TerraformBlock
-from pyhcl_fancy.collection_tree.utils import _is_directory
 
 
 class Node:
