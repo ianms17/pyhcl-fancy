@@ -32,7 +32,26 @@ class CollectionTree:
         return self.root
 
 
-    def find_directory_node(self, node: Node, target_directory: str) -> Node:
+    def find_directory_node(self, target_directory: str) -> Node:
+        """
+        Wrapper function to find a directory node in the collection tree.
+
+        Args:
+            target_directory (str): The path of the directory to search for.
+
+        Returns:
+            Node: The directory node if found, otherwise raises a DirectoryNodeNotFoundError.
+        """
+        found_node = self._find_directory_node(self.root, target_directory)
+        if found_node is None:
+            raise DirectoryNodeNotFoundError(
+                f"Directory node for {target_directory} not found in the collection tree."
+            )
+        
+        return found_node
+
+
+    def _find_directory_node(self, node: Node, target_directory: str) -> Node:
         """
         Recursively searches for a directory node within the collection tree
         given a directory path.
@@ -44,20 +63,37 @@ class CollectionTree:
         Returns:
             Node: The directory node if found, otherwise None.
         """
-        print(node.relative_file_path)
-
         if node.is_directory and node.relative_file_path == target_directory:
             return node
         
         for child in node.children:
-            found_node = self.find_directory_node(child, target_directory)
+            found_node = self._find_directory_node(child, target_directory)
             if found_node is not None:
                 return found_node
         
         return None
                 
 
-    def find_file_node(self, node: Node, target_file: str) -> Node:
+    def find_file_node(self, target_file: str) -> Node:
+        """
+        Wrapper function to find a file node in the collection tree.
+
+        Args:
+            target_file (str): The path of the file to search for.
+
+        Returns:
+            Node: The file node if found, otherwise raises a FileNodeNotFoundError.
+        """
+        found_node = self._find_file_node(self.root, target_file)
+        if found_node is None:
+            raise FileNodeNotFoundError(
+                f"File node for {target_file} not found in the collection tree."
+            )
+        
+        return found_node
+
+
+    def _find_file_node(self, node: Node, target_file: str) -> Node:
         """
         Recursively searches for a file node within the collection tree
         given a file path.
@@ -73,7 +109,7 @@ class CollectionTree:
             return node
 
         for child in node.children:
-            found_node = self.find_file_node(child, target_file)
+            found_node = self._find_file_node(child, target_file)
             if found_node is not None:
                 return found_node
 
