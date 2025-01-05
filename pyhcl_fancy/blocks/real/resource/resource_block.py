@@ -23,7 +23,7 @@ class ResourceBlock(RealBlock):
 
 
     def parse(
-        self, raw_resource_dict: dict, resource_file_path: str, file_node: Node
+        self, raw_resource_dict: dict, resource_file_path: str, parent_file_node: Node
     ) -> None:
         """
         Parses the raw_resource_dict to set the ResourceBlock's fields.
@@ -39,10 +39,10 @@ class ResourceBlock(RealBlock):
 
         self.resource_type = list(raw_resource_dict.keys())[0]
         self.resource_name = list(raw_resource_dict[self.resource_type].keys())[0]
-        if file_node.submodule_state_path is None:
+        if parent_file_node.submodule_state_path is None:
             self.state_path = f"{self.resource_type}.{self.resource_name}"
         else:
-            self.state_path = f"{file_node.submodule_state_path}.{self.resource_type}.{self.resource_name}"
+            self.state_path = f"{parent_file_node.submodule_state_path}.{self.resource_type}.{self.resource_name}"
         self.file_path = resource_file_path
         for attribute in raw_resource_dict[self.resource_type][self.resource_name]:
             self.content[attribute] = raw_resource_dict[self.resource_type][

@@ -36,7 +36,7 @@ class FancyParser:
         self.terraform_content: dict = {}
         self.collection_tree: CollectionTree = CollectionTree()
 
-    def construct_empty_tree(self) -> CollectionTree:
+    def construct_empty_tree(self) -> None:
         """
         Constructs an empty collection tree from the Terraform files.
 
@@ -45,10 +45,6 @@ class FancyParser:
         and adds directory and file nodes based on the file paths in the
         Terraform content. If a directory node is not found, it creates a new
         one and adds it to the collection tree.
-
-        Returns:
-            CollectionTree: The constructed collection tree with directory
-            and file nodes added.
         """
 
         root = self._set_tree_root()
@@ -62,7 +58,7 @@ class FancyParser:
                     # directory path is everything but the last element
                     directory_path = file.split("/")[:-1]
                     directory_node = self.collection_tree.find_directory_node(
-                        root, directory_path
+                        directory_path
                     )
                 # if directory node isn't found, create it
                 except DirectoryNodeNotFoundError:
@@ -77,7 +73,7 @@ class FancyParser:
             file_node.relative_file_path = file
             directory_node.add_child(file_node)
 
-    def parse(self):
+    def parse(self) -> None:
         """
         Parses the Terraform content and constructs the collection tree.
 
@@ -117,7 +113,7 @@ class FancyParser:
 
         for file in self.terraform_content:
             file_node = self.collection_tree.find_file_node(
-                self.collection_tree.root, file
+                file
             )
 
             for block_type in self.terraform_content[file]:
@@ -127,7 +123,9 @@ class FancyParser:
                         for module in self.terraform_content[file][block_type]:
                             module_block = ModuleBlock()
                             module_block.parse(
-                                raw_module_dict=module, module_file_path=file
+                                raw_module_dict=module,
+                                module_file_path=file,
+                                parent_file_node=file_node,
                             )
                             file_node.blocks.append(module_block)
 
@@ -135,7 +133,6 @@ class FancyParser:
                         if Path(module_block.module_source).is_dir():
                             submodule_directory_node = (
                                 self.collection_tree.find_directory_node(
-                                    self.collection_tree.root,
                                     module_block.module_source,
                                 )
                             )
@@ -147,7 +144,9 @@ class FancyParser:
                         for resource in self.terraform_content[file][block_type]:
                             resource_block = ResourceBlock()
                             resource_block.parse(
-                                raw_resource_dict=resource, resource_file_path=file
+                                raw_resource_dict=resource,
+                                resource_file_path=file,
+                                parent_file_node=file_node,
                             )
                             file_node.blocks.append(resource_block)
                     case "data":
@@ -173,7 +172,7 @@ class FancyParser:
                                 raw_variable_dict=variable, variable_file_path=file
                             )
                             file_node.blocks.append(variable_block)
-                    case "local":
+                    case "locals":
                         local_block = LocalBlock()
                         local_block.parse(
                             raw_locals_dict=self.terraform_content[file][block_type],

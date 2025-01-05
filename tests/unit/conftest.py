@@ -4,6 +4,7 @@ import hcl2
 from pyhcl_fancy.collection_tree.node import Node
 from pyhcl_fancy.collection_tree.tree import CollectionTree
 from pyhcl_fancy.blocks.real.module.module_block import ModuleBlock
+from pyhcl_fancy.parser.parser import FancyParser
 
     
 #
@@ -110,6 +111,25 @@ def multi_level_collection_tree() -> CollectionTree:
         sub_directory_node.add_child(node)
 
     return tree
+
+
+#
+# Parser Fixtures
+#
+#
+@pytest.fixture
+def flat_parser() -> FancyParser:
+    parser = FancyParser("tests/unit/sample_terraform/parser_flat")
+    parser._read_tf_files()
+    return parser
+
+
+@pytest.fixture
+def multi_level_parser() -> FancyParser:
+    parser = FancyParser("tests/unit/sample_terraform/parser_multi_level")
+    parser._read_tf_files()
+    return parser
+
 
 #
 # Example Blocks for Testing
