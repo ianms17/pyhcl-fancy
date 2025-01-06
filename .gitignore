@@ -1,0 +1,5 @@
+.ruff_cache
+.local
+*__pycache__
+.coverage
+dist/
