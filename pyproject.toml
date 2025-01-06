@@ -19,9 +19,6 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 
-[project]
-requires-python = ">= 3.10"
-
 [tool.poetry.dependencies]
 python = ">= 3.10"
 python-hcl2 = "^5.1.1"
