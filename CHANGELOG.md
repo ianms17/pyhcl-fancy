@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.1...v0.2.2) (2025-01-07)
+
+
+### Bug Fixes
+
+* Set publish automation to be dispatch ([#11](https://github.com/ianms17/pyhcl-fancy/issues/11)) ([d213bad](https://github.com/ianms17/pyhcl-fancy/commit/d213bad10664f181aec1c1ce191186a08e0f160e))
+
 ## [0.2.1](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.0...v0.2.1) (2025-01-07)
 
 
