@@ -15,4 +15,6 @@ jobs:
       - name: Build
         run: poetry build
       - name: Publish
+        permissions:
+          id-token: write
         run: poetry publish
