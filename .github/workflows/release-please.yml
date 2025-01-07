@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+      - feature/release-please
 
 permissions:
   contents: write
@@ -13,3 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
+        with:
+          release-type: python
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
