@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+        feature/release-please
 
 permissions:
   contents: write
