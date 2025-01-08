@@ -50,13 +50,13 @@ class FancyParser:
         root = self._set_tree_root()
 
         for file in self.terraform_content:
+            directory_path = str(Path(file).parent)
             # if file path minus file name is the given directory, file is root level
-            if "/".join(file.split("/")[:-1]) == self.terraform_directory:
+            if directory_path == self.terraform_directory:
                 directory_node = root
             else:
                 try:
                     # directory path is everything but the last element
-                    directory_path = file.split("/")[:-1]
                     directory_node = self.collection_tree.find_directory_node(
                         directory_path
                     )
@@ -64,7 +64,7 @@ class FancyParser:
                 except DirectoryNodeNotFoundError:
                     directory_node = Node()
                     directory_node.is_directory = True
-                    directory_node.relative_file_path = "/".join(directory_path)
+                    directory_node.relative_file_path = directory_path
                     directory_node.parent = root
                     root.add_child(directory_node)
 
@@ -130,10 +130,11 @@ class FancyParser:
                             file_node.blocks.append(module_block)
 
                         # module source points to a submodule, move that submodules directory node to the calling module's file node
-                        if Path(module_block.module_source).is_dir():
+                        absolute_module_source = file_node.parent.relative_file_path + "/" + module_block.module_source.lstrip("./")
+                        if Path(absolute_module_source).is_dir():
                             submodule_directory_node = (
                                 self.collection_tree.find_directory_node(
-                                    module_block.module_source,
+                                    absolute_module_source,
                                 )
                             )
                             self.collection_tree.move_node(

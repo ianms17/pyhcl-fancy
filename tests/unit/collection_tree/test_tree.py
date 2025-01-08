@@ -147,3 +147,53 @@ def test_collection_tree_move_node_source_and_destination_both_files(multi_level
         destination = multi_level_collection_tree.find_file_node("terraform/0.tf")
         source = multi_level_collection_tree.find_file_node("terraform/1.tf")
         multi_level_collection_tree.move_node(source, destination, sample_module_block)
+
+#
+# Visualize Tests
+#
+def test_collection_tree_visualize_flat(flat_parser, capsys):
+    flat_parser.parse()
+    flat_parser.collection_tree.visualize()
+    
+    expected_output = """tests/unit/sample_terraform/parser_flat
+|  tests/unit/sample_terraform/parser_flat/data.tf
+|  tests/unit/sample_terraform/parser_flat/outputs.tf
+|  tests/unit/sample_terraform/parser_flat/locals.tf
+|  tests/unit/sample_terraform/parser_flat/kms.tf
+|  tests/unit/sample_terraform/parser_flat/variables.tf
+|  tests/unit/sample_terraform/parser_flat/lambda.tf
+|  tests/unit/sample_terraform/parser_flat/provider.tf
+|  tests/unit/sample_terraform/parser_flat/sqs.tf
+|  tests/unit/sample_terraform/parser_flat/terraform.tf
+"""
+    
+    output = capsys.readouterr().out
+    for line in expected_output.split("\n"):
+        assert line in output
+
+    # assert capsys.readouterr().out == expected_output
+
+
+def test_collection_tree_visualize_multi_level(multi_level_parser, capsys):
+    multi_level_parser.parse()
+    multi_level_parser.collection_tree.visualize()
+
+    expected_output = """tests/unit/sample_terraform/parser_multi_level
+|  tests/unit/sample_terraform/parser_multi_level/data.tf
+|  tests/unit/sample_terraform/parser_multi_level/outputs.tf
+|  tests/unit/sample_terraform/parser_multi_level/locals.tf
+|  tests/unit/sample_terraform/parser_multi_level/kms.tf
+|  tests/unit/sample_terraform/parser_multi_level/variables.tf
+|  tests/unit/sample_terraform/parser_multi_level/lambda.tf
+|  |  tests/unit/sample_terraform/parser_multi_level/lambda
+|  |  |  tests/unit/sample_terraform/parser_multi_level/lambda/outputs.tf
+|  |  |  tests/unit/sample_terraform/parser_multi_level/lambda/main.tf
+|  |  |  tests/unit/sample_terraform/parser_multi_level/lambda/variables.tf
+|  tests/unit/sample_terraform/parser_multi_level/provider.tf
+|  tests/unit/sample_terraform/parser_multi_level/sqs.tf
+|  tests/unit/sample_terraform/parser_multi_level/terraform.tf
+"""
+
+    output = capsys.readouterr().out
+    for line in expected_output.split("\n"):
+        assert line in output
