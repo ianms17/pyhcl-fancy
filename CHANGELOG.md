@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.2...v0.2.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* rework publish action to deploy to pypi ([#13](https://github.com/ianms17/pyhcl-fancy/issues/13)) ([24f8f2f](https://github.com/ianms17/pyhcl-fancy/commit/24f8f2ff3c8f3a20e310d671b82ce630bfb8178d))
+
 ## [0.2.2](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.1...v0.2.2) (2025-01-07)
 
 
