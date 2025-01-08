@@ -157,3 +157,15 @@ class CollectionTree:
             source.submodule_state_path = f"{destination.submodule_state_path}.module.{caller.module_name}"
 
         return source
+    
+
+    def visualize(self) -> None:
+        self._visualize(self.root, "")
+
+    
+    def _visualize(self, node: Node, prefix: str) -> None:
+        print(prefix + node.relative_file_path)
+
+        for child in node.children:
+            self._visualize(child, prefix + "|  ")
+        
