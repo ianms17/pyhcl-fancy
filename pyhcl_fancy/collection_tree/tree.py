@@ -160,10 +160,37 @@ class CollectionTree:
     
 
     def visualize(self) -> None:
+        """
+        Prints a visual representation of the collection tree to the console.
+
+        This representation is a tree structure with the root node at the top and
+        each node's children indented below it. The relative file path of each node
+        is printed on the same line as the node.
+
+        Example output:
+
+        terraform/
+        |  0.tf
+        |  1.tf
+        module/
+            2.tf
+            3.tf
+            module/
+                4.tf
+                5.tf
+        """
         self._visualize(self.root, "")
 
     
     def _visualize(self, node: Node, prefix: str) -> None:
+        """
+        Recursively prints the visual representation of the collection tree.
+
+        Args:
+            node (Node): The current node being visualized in the collection tree.
+            prefix (str): The prefix string used to format the visual representation,
+                        indicating the depth of the node in the tree structure.
+        """
         print(prefix + node.relative_file_path)
 
         for child in node.children:
