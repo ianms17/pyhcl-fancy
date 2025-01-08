@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.3...v0.3.0) (2025-01-08)
+
+
+### Features
+
+* Add visualizer and fix submodule-node movement ([#15](https://github.com/ianms17/pyhcl-fancy/issues/15)) ([bfd424f](https://github.com/ianms17/pyhcl-fancy/commit/bfd424f547808d393f659c08439a36b39e4b815f))
+
 ## [0.2.3](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.2...v0.2.3) (2025-01-08)
 
 
