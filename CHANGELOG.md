@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/ianms17/pyhcl-fancy/compare/v0.3.0...v0.3.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* Modules in subdirectories not being moved to calling file ([#17](https://github.com/ianms17/pyhcl-fancy/issues/17)) ([28eddf8](https://github.com/ianms17/pyhcl-fancy/commit/28eddf88325a2498973ecb9a3079b6637f4c8ee4))
+
 ## [0.3.0](https://github.com/ianms17/pyhcl-fancy/compare/v0.2.3...v0.3.0) (2025-01-08)
 
 
