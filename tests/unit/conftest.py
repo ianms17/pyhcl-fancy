@@ -131,6 +131,13 @@ def multi_level_parser() -> FancyParser:
     return parser
 
 
+@pytest.fixture
+def multi_nested_parser() -> FancyParser:
+    parser = FancyParser("tests/unit/sample_terraform/parser_multi_nested")
+    parser._read_tf_files()
+    return parser
+
+
 #
 # Example Blocks for Testing
 #

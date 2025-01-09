@@ -171,8 +171,6 @@ def test_collection_tree_visualize_flat(flat_parser, capsys):
     for line in expected_output.split("\n"):
         assert line in output
 
-    # assert capsys.readouterr().out == expected_output
-
 
 def test_collection_tree_visualize_multi_level(multi_level_parser, capsys):
     multi_level_parser.parse()
@@ -192,6 +190,30 @@ def test_collection_tree_visualize_multi_level(multi_level_parser, capsys):
 |  tests/unit/sample_terraform/parser_multi_level/provider.tf
 |  tests/unit/sample_terraform/parser_multi_level/sqs.tf
 |  tests/unit/sample_terraform/parser_multi_level/terraform.tf
+"""
+
+    output = capsys.readouterr().out
+    for line in expected_output.split("\n"):
+        assert line in output
+
+
+def test_collection_tree_visualize_multi_nested(multi_nested_parser, capsys):
+    multi_nested_parser.parse()
+    multi_nested_parser.collection_tree.visualize()
+
+
+    expected_output = """tests/unit/sample_terraform/parser_multi_nested
+|  tests/unit/sample_terraform/parser_multi_nested/main.tf
+|  |  tests/unit/sample_terraform/parser_multi_nested/modules/lambda
+|  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/lambda/main.tf
+|  |  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/sqs
+|  |  |  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/sqs/main.tf
+|  |  |  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/sqs/variables.tf
+|  |  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/sns
+|  |  |  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/sns/main.tf
+|  |  |  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/sns/variables.tf
+|  |  |  tests/unit/sample_terraform/parser_multi_nested/modules/lambda/variables.tf
+|  tests/unit/sample_terraform/parser_multi_nested/provider.tf
 """
 
     output = capsys.readouterr().out
