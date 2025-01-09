@@ -4,7 +4,7 @@ from pyhcl_fancy.blocks.reference.output.output_block import OutputBlock
 def test_output_block_init():
     block = OutputBlock()
     assert block.name == ""
-    assert block.value == None
+    assert block.value is None
     assert block.description == ""
     assert block.options == {}
     assert block.file_path == ""
@@ -35,9 +35,8 @@ def test_output_block_parse_options(raw_terraform_block):
     output_block_content = raw_terraform_block("output/simple_output.tf", "output")
     output_block = OutputBlock()
     output_block.parse(output_block_content[0], "terraform")
-    assert output_block.options == {
-        "sensitive": False
-    }
+    assert output_block.options == {"sensitive": False}
+
 
 def test_output_block_parse_file_path(raw_terraform_block):
     output_block_content = raw_terraform_block("output/simple_output.tf", "output")

@@ -22,7 +22,6 @@ class ProviderBlock(TerraformBlock):
         self.default_tags: dict = {}
         self.options: dict = {}
 
-
     def parse(self, raw_provider_dict: dict, provider_file_path: str) -> None:
         """
         Parses the raw_provider_dict to set the ProviderBlock's fields.
@@ -50,6 +49,8 @@ class ProviderBlock(TerraformBlock):
                         )
                     self.assume_role = raw_provider_dict[self.type][attribute][0]
                 case "default_tags":
-                    self.default_tags = raw_provider_dict[self.type][attribute][0]["tags"]
+                    self.default_tags = raw_provider_dict[self.type][attribute][0][
+                        "tags"
+                    ]
                 case _:
                     self.options[attribute] = raw_provider_dict[self.type][attribute]

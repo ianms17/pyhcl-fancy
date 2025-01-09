@@ -11,9 +11,7 @@ def test_local_block_parse_content_single_entry(raw_terraform_block):
     local_block_content = raw_terraform_block("locals/simple_locals.tf", "locals")
     local_block = LocalBlock()
     local_block.parse(local_block_content, "terraform")
-    assert local_block.content == {
-        "queue_name": "my-other-queue"
-    }
+    assert local_block.content == {"queue_name": "my-other-queue"}
 
 
 def test_local_block_parse_file_path_single_entry(raw_terraform_block):
@@ -29,7 +27,7 @@ def test_local_block_parse_content_multi_entry(raw_terraform_block):
     local_block.parse(local_block_content, "terraform")
     assert local_block.content == {
         "queue_name": "my-other-queue",
-        "lambda_name": "my-other-lambda"
+        "lambda_name": "my-other-lambda",
     }
 
 
@@ -40,5 +38,5 @@ def test_local_block_parse_content_multi_block(raw_terraform_block):
     local_block.parse(local_block_content, "terraform")
     assert local_block.content == {
         "queue_name": "my-other-queue",
-        "lambda_name": "my-other-lambda"
+        "lambda_name": "my-other-lambda",
     }

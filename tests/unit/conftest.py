@@ -6,7 +6,7 @@ from pyhcl_fancy.collection_tree.tree import CollectionTree
 from pyhcl_fancy.blocks.real.module.module_block import ModuleBlock
 from pyhcl_fancy.parser.parser import FancyParser
 
-    
+
 #
 # Block Test Fixtures
 #
@@ -15,8 +15,9 @@ def raw_terraform_block():
     def _terraform_block(file_path: str, block_type: str) -> dict:
         with open(f"tests/unit/sample_terraform/{file_path}", "r") as f:
             return hcl2.load(f)[block_type]
+
     return _terraform_block
-    
+
 
 @pytest.fixture
 def sample_file_node() -> Node:
@@ -127,6 +128,13 @@ def flat_parser() -> FancyParser:
 @pytest.fixture
 def multi_level_parser() -> FancyParser:
     parser = FancyParser("tests/unit/sample_terraform/parser_multi_level")
+    parser._read_tf_files()
+    return parser
+
+
+@pytest.fixture
+def multi_nested_parser() -> FancyParser:
+    parser = FancyParser("tests/unit/sample_terraform/parser_multi_nested")
     parser._read_tf_files()
     return parser
 

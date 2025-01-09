@@ -16,7 +16,6 @@ class ModuleBlock(RealBlock):
         self.module_source: str = ""
         self.module_version: str = ""
 
-
     def parse(
         self, raw_module_dict: dict, module_file_path: str, parent_file_node: Node
     ) -> None:
@@ -37,7 +36,9 @@ class ModuleBlock(RealBlock):
         if parent_file_node.submodule_state_path is None:
             self.state_path = f"module.{self.module_name}"
         else:
-            self.state_path = f"{parent_file_node.submodule_state_path}.module.{self.module_name}"
+            self.state_path = (
+                f"{parent_file_node.submodule_state_path}.module.{self.module_name}"
+            )
         for attribute in raw_module_dict[self.module_name]:
             match attribute:
                 case "source":

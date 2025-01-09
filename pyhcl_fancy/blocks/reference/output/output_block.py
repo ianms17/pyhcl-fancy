@@ -17,7 +17,6 @@ class OutputBlock(TerraformBlock):
         self.description: str = ""
         self.options: dict = {}
 
-
     def parse(self, raw_output_dict: dict, output_file_path: str) -> None:
         """
         Parses the raw_output_dict dictionary and sets the OutputBlock's fields.

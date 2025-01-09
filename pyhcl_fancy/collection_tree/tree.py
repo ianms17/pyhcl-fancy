@@ -31,7 +31,6 @@ class CollectionTree:
             self.root = node
         return self.root
 
-
     def find_directory_node(self, target_directory: str) -> Node:
         """
         Wrapper function to find a directory node in the collection tree.
@@ -47,9 +46,8 @@ class CollectionTree:
             raise DirectoryNodeNotFoundError(
                 f"Directory node for {target_directory} not found in the collection tree."
             )
-        
-        return found_node
 
+        return found_node
 
     def _find_directory_node(self, node: Node, target_directory: str) -> Node:
         """
@@ -65,14 +63,13 @@ class CollectionTree:
         """
         if node.is_directory and node.relative_file_path == target_directory:
             return node
-        
+
         for child in node.children:
             found_node = self._find_directory_node(child, target_directory)
             if found_node is not None:
                 return found_node
-        
+
         return None
-                
 
     def find_file_node(self, target_file: str) -> Node:
         """
@@ -89,9 +86,8 @@ class CollectionTree:
             raise FileNodeNotFoundError(
                 f"File node for {target_file} not found in the collection tree."
             )
-        
-        return found_node
 
+        return found_node
 
     def _find_file_node(self, node: Node, target_file: str) -> Node:
         """
@@ -140,7 +136,7 @@ class CollectionTree:
             raise InvalidMoveLocationError(
                 f"The source and destination nodes must not have the same directory status. Both nodes have directory status {source.is_directory}."
             )
-        
+
         curr_parent = source.parent
         for child in curr_parent.children:
             if child == source:
@@ -149,15 +145,16 @@ class CollectionTree:
         # remove node from current parent and add to new parent
         curr_parent.children.remove(node_to_move)
         destination.add_child(node_to_move)
-        
-        # update the submodule state path 
+
+        # update the submodule state path
         if destination.submodule_state_path == "":
             source.submodule_state_path = f"module.{caller.module_name}"
         else:
-            source.submodule_state_path = f"{destination.submodule_state_path}.module.{caller.module_name}"
+            source.submodule_state_path = (
+                f"{destination.submodule_state_path}.module.{caller.module_name}"
+            )
 
         return source
-    
 
     def visualize(self) -> None:
         """
@@ -181,7 +178,6 @@ class CollectionTree:
         """
         self._visualize(self.root, "")
 
-    
     def _visualize(self, node: Node, prefix: str) -> None:
         """
         Recursively prints the visual representation of the collection tree.
@@ -195,4 +191,3 @@ class CollectionTree:
 
         for child in node.children:
             self._visualize(child, prefix + "|  ")
-        

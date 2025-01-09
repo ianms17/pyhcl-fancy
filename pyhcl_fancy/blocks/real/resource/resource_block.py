@@ -21,7 +21,6 @@ class ResourceBlock(RealBlock):
         self.resource_type: str = ""
         self.resource_name: str = ""
 
-
     def parse(
         self, raw_resource_dict: dict, resource_file_path: str, parent_file_node: Node
     ) -> None:
