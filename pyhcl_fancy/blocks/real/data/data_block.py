@@ -16,6 +16,7 @@ class DataBlock(RealBlock):
             count (int): The count of the block.
             for_each (list | dict): The for_each of the block.
             content (dict): The content of the block.
+            file_path (str): The path of the file where the block is defined
         """
         super().__init__()
         self.data_type: str = ""
@@ -35,7 +36,6 @@ class DataBlock(RealBlock):
         Returns:
             None
         """
-
         self.data_type = list(raw_data_dict.keys())[0]
         self.data_name = list(raw_data_dict[self.data_type].keys())[0]
         self.file_path = data_file_path

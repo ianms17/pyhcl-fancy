@@ -13,6 +13,9 @@ class ProviderBlock(TerraformBlock):
             assume_role (str): The assume role for the provider.
             default_tags (dict): The default tags for the provider.
             options (dict): The options for the provider.
+
+        Inherited Attributes:
+            file_path (str): The path of the file where the provider is defined.
         """
         super().__init__()
         self.type: str = ""
@@ -21,6 +24,7 @@ class ProviderBlock(TerraformBlock):
         self.assume_role: dict = {}
         self.default_tags: dict = {}
         self.options: dict = {}
+
 
     def parse(self, raw_provider_dict: dict, provider_file_path: str) -> None:
         """
@@ -33,7 +37,6 @@ class ProviderBlock(TerraformBlock):
         Returns:
             None
         """
-
         self.type = list(raw_provider_dict.keys())[0]
         self.file_path = provider_file_path
         for attribute in raw_provider_dict[self.type]:

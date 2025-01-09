@@ -8,12 +8,13 @@ class LocalBlock(TerraformBlock):
 
         Attributes:
             content (dict): The content of the locals block.
+
+        Inherited Attributes:
+            file_path (str): The path of the file where the block is defined
         """
         super().__init__()
         self.content: dict = {}
 
-    def convert_to_hcl(self) -> str:
-        pass
 
     def parse(self, raw_locals_dict: dict, locals_file_path: str) -> str:
         """

@@ -9,6 +9,9 @@ class TerraformMetaBlock(TerraformBlock):
         Attributes:
             backend (dict): The backend configuration for Terraform.
             required_providers (list): A list of required providers for the Terraform configuration.
+
+        Inherited Attributes:
+            file_path (str): The path of the file where the block is defined
         """
         super().__init__()
         self.backend_type: str = ""
@@ -16,8 +19,6 @@ class TerraformMetaBlock(TerraformBlock):
         self.required_providers: list[dict] = []
         self.options: dict = {}
 
-    def convert_to_hcl(self) -> str:
-        pass
 
     def parse(self, raw_meta_dict: dict, meta_file_path: str) -> str:
         """
@@ -36,7 +37,6 @@ class TerraformMetaBlock(TerraformBlock):
         Returns:
             None
         """
-
         self.file_path = meta_file_path
         for setting in raw_meta_dict:
             match setting:

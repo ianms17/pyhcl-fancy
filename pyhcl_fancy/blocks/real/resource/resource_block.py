@@ -16,6 +16,7 @@ class ResourceBlock(RealBlock):
             count (int): The count of the block.
             for_each (list | dict): The for_each of the block.
             content (dict): The content of the block.
+            file_path (str): The path of the file where the block is defined
         """
         super().__init__()
         self.resource_type: str = ""
@@ -35,7 +36,6 @@ class ResourceBlock(RealBlock):
         Returns:
             None
         """
-
         self.resource_type = list(raw_resource_dict.keys())[0]
         self.resource_name = list(raw_resource_dict[self.resource_type].keys())[0]
         if parent_file_node.submodule_state_path is None:
