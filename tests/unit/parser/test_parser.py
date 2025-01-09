@@ -118,3 +118,7 @@ def test_parse_flat(flat_parser):
 
 def test_parse_multi_level(multi_level_parser):
     multi_level_parser.parse()
+
+
+def test_parse_multi_level_with_submodules(multi_nested_parser):
+    multi_nested_parser.parse()
