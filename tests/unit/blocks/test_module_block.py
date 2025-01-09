@@ -43,7 +43,7 @@ def test_module_block_parse_content(raw_terraform_block, sample_file_node):
         "description": "My awesome lambda function",
         "handler": "index.lambda_handler",
         "runtime": "python3.12",
-        "source_path": "../src/lambda-function1"
+        "source_path": "../src/lambda-function1",
     }
 
 
@@ -75,8 +75,10 @@ def test_module_block_parse_for_each(raw_terraform_block, sample_file_node):
     assert module_block.for_each is None
 
 
-def test_module_block_parse_state_path_nested_module(raw_terraform_block, submodule_file_node):
+def test_module_block_parse_state_path_nested_module(
+    raw_terraform_block, submodule_file_node
+):
     raw_module_dict = raw_terraform_block("module/simple_module.tf", "module")
-    module_block = ModuleBlock()    
+    module_block = ModuleBlock()
     module_block.parse(raw_module_dict[0], "terraform", submodule_file_node)
     assert module_block.state_path == "module.test_module.module.lambda_function"

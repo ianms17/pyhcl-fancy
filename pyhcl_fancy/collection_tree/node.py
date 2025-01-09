@@ -25,7 +25,6 @@ class Node:
         self.is_leaf: bool = True
         self.submodule_state_path: str = None
 
-
     def add_child(self, child: Self) -> None:
         """
         Adds a child node to the current node's list of children.

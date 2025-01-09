@@ -35,7 +35,7 @@ def test_collection_tree_find_directory_node_at_root(flat_collection_tree):
 
 def test_collection_tree_find_directory_node_at_leaf(flat_collection_tree):
     found_node = flat_collection_tree.find_directory_node("terraform/module/")
-    assert found_node.is_leaf == True and found_node.relative_file_path == "terraform/module/"
+    assert found_node.is_leaf and found_node.relative_file_path == "terraform/module/"
 
 
 def test_collection_tree_find_directory_node_skipped_leaf(multi_level_collection_tree):
@@ -67,7 +67,9 @@ def test_collection_tree_find_file_node_not_found_flat(flat_collection_tree):
         flat_collection_tree.find_file_node("terraform/invalid.tf")
 
 
-def test_collection_tree_find_file_node_not_found_multi_level(multi_level_collection_tree):
+def test_collection_tree_find_file_node_not_found_multi_level(
+    multi_level_collection_tree,
+):
     with pytest.raises(FileNodeNotFoundError):
         multi_level_collection_tree.find_file_node("terraform/invalid.tf")
 
@@ -75,78 +77,111 @@ def test_collection_tree_find_file_node_not_found_multi_level(multi_level_collec
 #
 # Move Node Tests
 #
-def test_collection_tree_move_node_source_removed_from_parent(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_source_removed_from_parent(
+    multi_level_collection_tree, sample_module_block
+):
     source = multi_level_collection_tree.find_file_node("terraform/module/6.tf")
     destination = multi_level_collection_tree.find_directory_node("terraform/")
     source_parent = source.parent
-    moved_node = multi_level_collection_tree.move_node(source, destination, sample_module_block)
+    moved_node = multi_level_collection_tree.move_node(
+        source, destination, sample_module_block
+    )
     assert moved_node not in source_parent.children
 
 
-def test_collection_tree_move_node_source_added_to_destination(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_source_added_to_destination(
+    multi_level_collection_tree, sample_module_block
+):
     source = multi_level_collection_tree.find_file_node("terraform/module/6.tf")
     destination = multi_level_collection_tree.find_directory_node("terraform/")
-    moved_node = multi_level_collection_tree.move_node(source, destination, sample_module_block)
-    
+    moved_node = multi_level_collection_tree.move_node(
+        source, destination, sample_module_block
+    )
+
     # moved node and source are the same, validate both
     assert moved_node in destination.children
     assert source in destination.children
 
 
-def test_collection_tree_move_node_source_destination_not_has_state_path(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_source_destination_not_has_state_path(
+    multi_level_collection_tree, sample_module_block
+):
     source = multi_level_collection_tree.find_file_node("terraform/module/6.tf")
     destination = multi_level_collection_tree.find_directory_node("terraform/")
-    moved_node = multi_level_collection_tree.move_node(source, destination, sample_module_block)
+    moved_node = multi_level_collection_tree.move_node(
+        source, destination, sample_module_block
+    )
     assert moved_node.submodule_state_path == "module.test_module"
 
 
-def test_collection_tree_move_node_destination_has_state_path(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_destination_has_state_path(
+    multi_level_collection_tree, sample_module_block
+):
     source = multi_level_collection_tree.find_file_node("terraform/module/6.tf")
     destination = multi_level_collection_tree.find_directory_node("terraform/skipped/")
-    moved_node = multi_level_collection_tree.move_node(source, destination, sample_module_block)
+    moved_node = multi_level_collection_tree.move_node(
+        source, destination, sample_module_block
+    )
     assert moved_node.submodule_state_path == "module.skipped.module.test_module"
 
 
-def test_collection_tree_move_node_move_file_to_directory(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_move_file_to_directory(
+    multi_level_collection_tree, sample_module_block
+):
     source = multi_level_collection_tree.find_file_node("terraform/module/6.tf")
     destination = multi_level_collection_tree.find_directory_node("terraform/")
     multi_level_collection_tree.move_node(source, destination, sample_module_block)
     assert source in destination.children
-    
 
-def test_collection_tree_move_node_move_directory_to_file(multi_level_collection_tree, sample_module_block):
+
+def test_collection_tree_move_node_move_directory_to_file(
+    multi_level_collection_tree, sample_module_block
+):
     destination = multi_level_collection_tree.find_file_node("terraform/module/6.tf")
     source = multi_level_collection_tree.find_directory_node("terraform/skipped/")
     multi_level_collection_tree.move_node(source, destination, sample_module_block)
     assert source in destination.children
-    
 
 
-def test_collection_tree_move_node_source_and_destination_same(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_source_and_destination_same(
+    multi_level_collection_tree, sample_module_block
+):
     with pytest.raises(InvalidMoveLocationError):
-        destination = multi_level_collection_tree.find_directory_node("terraform/module/")
+        destination = multi_level_collection_tree.find_directory_node(
+            "terraform/module/"
+        )
         source = multi_level_collection_tree.find_directory_node("terraform/module/")
         multi_level_collection_tree.move_node(source, destination, sample_module_block)
 
 
-def test_collection_tree_move_node_node_already_in_destination(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_node_already_in_destination(
+    multi_level_collection_tree, sample_module_block
+):
     with pytest.raises(InvalidMoveLocationError):
         destination = multi_level_collection_tree.find_directory_node("terraform/")
         source = multi_level_collection_tree.find_file_node("terraform/0.tf")
         multi_level_collection_tree.move_node(source, destination, sample_module_block)
 
-def test_collection_tree_move_node_source_and_destination_both_directories(multi_level_collection_tree, sample_module_block):
+
+def test_collection_tree_move_node_source_and_destination_both_directories(
+    multi_level_collection_tree, sample_module_block
+):
     with pytest.raises(InvalidMoveLocationError):
-        destination = multi_level_collection_tree.find_directory_node("terraform/module/")
+        destination = multi_level_collection_tree.find_directory_node(
+            "terraform/module/"
+        )
         source = multi_level_collection_tree.find_directory_node("terraform/skipped/")
         multi_level_collection_tree.move_node(source, destination, sample_module_block)
 
 
-def test_collection_tree_move_node_source_and_destination_both_files(multi_level_collection_tree, sample_module_block):
+def test_collection_tree_move_node_source_and_destination_both_files(
+    multi_level_collection_tree, sample_module_block
+):
     with pytest.raises(InvalidMoveLocationError):
         destination = multi_level_collection_tree.find_file_node("terraform/0.tf")
         source = multi_level_collection_tree.find_file_node("terraform/1.tf")
         multi_level_collection_tree.move_node(source, destination, sample_module_block)
+
 
 #
 # Visualize Tests
@@ -154,7 +189,7 @@ def test_collection_tree_move_node_source_and_destination_both_files(multi_level
 def test_collection_tree_visualize_flat(flat_parser, capsys):
     flat_parser.parse()
     flat_parser.collection_tree.visualize()
-    
+
     expected_output = """tests/unit/sample_terraform/parser_flat
 |  tests/unit/sample_terraform/parser_flat/data.tf
 |  tests/unit/sample_terraform/parser_flat/outputs.tf
@@ -166,7 +201,7 @@ def test_collection_tree_visualize_flat(flat_parser, capsys):
 |  tests/unit/sample_terraform/parser_flat/sqs.tf
 |  tests/unit/sample_terraform/parser_flat/terraform.tf
 """
-    
+
     output = capsys.readouterr().out
     for line in expected_output.split("\n"):
         assert line in output
@@ -200,7 +235,6 @@ def test_collection_tree_visualize_multi_level(multi_level_parser, capsys):
 def test_collection_tree_visualize_multi_nested(multi_nested_parser, capsys):
     multi_nested_parser.parse()
     multi_nested_parser.collection_tree.visualize()
-
 
     expected_output = """tests/unit/sample_terraform/parser_multi_nested
 |  tests/unit/sample_terraform/parser_multi_nested/main.tf

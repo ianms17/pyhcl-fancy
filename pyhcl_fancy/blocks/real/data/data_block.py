@@ -21,7 +21,6 @@ class DataBlock(RealBlock):
         self.data_type: str = ""
         self.data_name: str = ""
 
-
     def parse(
         self, raw_data_dict: dict, data_file_path: str, parent_file_node: Node
     ) -> None:

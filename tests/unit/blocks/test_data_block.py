@@ -61,7 +61,9 @@ def test_basic_data_block_parse_file_path(raw_terraform_block, sample_file_node)
     assert data_block.file_path == "terraform"
 
 
-def test_submodule_data_block_parse_state_path(raw_terraform_block, submodule_file_node):
+def test_submodule_data_block_parse_state_path(
+    raw_terraform_block, submodule_file_node
+):
     data_block_list = raw_terraform_block("data/simple_data.tf", "data")
     data_block = DataBlock()
     data_block.parse(data_block_list[0], "terraform", submodule_file_node)

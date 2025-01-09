@@ -112,9 +112,7 @@ class FancyParser:
         self.construct_empty_tree()
 
         for file in self.terraform_content:
-            file_node = self.collection_tree.find_file_node(
-                file
-            )
+            file_node = self.collection_tree.find_file_node(file)
 
             for block_type in self.terraform_content[file]:
                 # switch case to apply a ruleset based on the type of block
@@ -128,24 +126,38 @@ class FancyParser:
                                 parent_file_node=file_node,
                             )
                             file_node.blocks.append(module_block)
-                        
+
                             # logical block to get valid parent of local submodules
                             true_parent = file_node.parent
-                            absolute_module_source = true_parent.relative_file_path + "/" + module_block.module_source.lstrip("./")
+                            absolute_module_source = (
+                                true_parent.relative_file_path
+                                + "/"
+                                + module_block.module_source.lstrip("./")
+                            )
                             if module_block.module_source.startswith("../"):
                                 file_count_walk_back = 0
                                 i = 0
-                                separated_module_source = module_block.module_source.split("/")
+                                separated_module_source = (
+                                    module_block.module_source.split("/")
+                                )
                                 while separated_module_source[i] == "..":
                                     file_count_walk_back += 1
                                     i += 1
-                                
+
                                 true_parent_directory = "/".join(
-                                    true_parent.relative_file_path.split("/")[:-file_count_walk_back]
+                                    true_parent.relative_file_path.split("/")[
+                                        :-file_count_walk_back
+                                    ]
                                 )
-                                absolute_module_source = true_parent_directory + "/" + module_block.module_source.lstrip("../")
-                                true_parent = self.collection_tree.find_directory_node(absolute_module_source)
-                        
+                                absolute_module_source = (
+                                    true_parent_directory
+                                    + "/"
+                                    + module_block.module_source.lstrip("../")
+                                )
+                                true_parent = self.collection_tree.find_directory_node(
+                                    absolute_module_source
+                                )
+
                             # module source points to a submodule, move that submodules directory node to the calling module's file node
                             if Path(absolute_module_source).is_dir():
                                 submodule_directory_node = (
