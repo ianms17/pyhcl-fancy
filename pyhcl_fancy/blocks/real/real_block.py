@@ -11,7 +11,7 @@ class RealBlock(TerraformBlock):
             count (int): The count of the block.
             for_each (list | dict): The for_each of the block.
             content (dict): The content of the block.
-        
+
         Inherited Attributes:
             file_path (str): The path of the file where the block is defined
         """

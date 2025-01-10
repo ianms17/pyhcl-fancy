@@ -15,7 +15,6 @@ class LocalBlock(TerraformBlock):
         super().__init__()
         self.content: dict = {}
 
-
     def parse(self, raw_locals_dict: dict, locals_file_path: str) -> str:
         """
         Parses the raw locals dictionary and sets the content of the LocalBlock.

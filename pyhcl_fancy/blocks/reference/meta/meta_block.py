@@ -19,7 +19,6 @@ class TerraformMetaBlock(TerraformBlock):
         self.required_providers: list[dict] = []
         self.options: dict = {}
 
-
     def parse(self, raw_meta_dict: dict, meta_file_path: str) -> str:
         """
         Parses the raw meta dictionary and updates the TerraformMetaBlock attributes.

@@ -24,7 +24,6 @@ class VariableBlock(TerraformBlock):
         self.default: Any = None
         self.validation: dict = {}
 
-
     def parse(self, raw_variable_dict: dict, variable_file_path: str) -> None:
         """
         Parses the raw_variable_dict dictionary and sets the VariableBlock's fields.
