@@ -24,9 +24,6 @@ class VariableBlock(TerraformBlock):
         self.default: Any = None
         self.validation: dict = {}
 
-    def convert_to_hcl(self) -> str:
-        pass
-
     def parse(self, raw_variable_dict: dict, variable_file_path: str) -> None:
         """
         Parses the raw_variable_dict dictionary and sets the VariableBlock's fields.
@@ -38,7 +35,6 @@ class VariableBlock(TerraformBlock):
         Returns:
             None
         """
-
         self.variable_name = list(raw_variable_dict.keys())[0]
         self.file_path = variable_file_path
         for attribute in raw_variable_dict[self.variable_name]:

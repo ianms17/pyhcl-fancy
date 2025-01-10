@@ -163,18 +163,6 @@ class CollectionTree:
         This representation is a tree structure with the root node at the top and
         each node's children indented below it. The relative file path of each node
         is printed on the same line as the node.
-
-        Example output:
-
-        terraform/
-        |  0.tf
-        |  1.tf
-        module/
-            2.tf
-            3.tf
-            module/
-                4.tf
-                5.tf
         """
         self._visualize(self.root, "")
 

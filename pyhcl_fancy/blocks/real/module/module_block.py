@@ -10,6 +10,14 @@ class ModuleBlock(RealBlock):
         Attributes:
             module_name (str): The name of the module.
             module_source (str): The source of the module.
+            module_version (str): The version of the module.
+
+        Inherited Attributes:
+            state_path (str): The state path of the block.
+            count (int): The count of the block.
+            for_each (list | dict): The for_each of the block.
+            content (dict): The content of the block.
+            file_path (str): The path of the file where the block is defined
         """
         super().__init__()
         self.module_name: str = ""
@@ -30,7 +38,6 @@ class ModuleBlock(RealBlock):
         Returns:
             None
         """
-
         self.module_name = list(raw_module_dict.keys())[0]
         self.file_path = module_file_path
         if parent_file_node.submodule_state_path is None:

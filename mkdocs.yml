@@ -1,0 +1,9 @@
+site_name: PyHCL Fancy
+nav:
+  - Home: index.md
+  - Components: components.md
+  - Docs: code_documentation.md
+
+theme:
+  name: readthedocs
+

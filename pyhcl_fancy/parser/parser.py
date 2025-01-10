@@ -31,7 +31,6 @@ class FancyParser:
             terraform_content (dict): A dictionary mapping file paths to their parsed content.
             collection_tree (CollectionTree): The collection tree containing the directory and file nodes.
         """
-
         self.terraform_directory = terraform_directory
         self.terraform_content: dict = {}
         self.collection_tree: CollectionTree = CollectionTree()
@@ -46,7 +45,6 @@ class FancyParser:
         Terraform content. If a directory node is not found, it creates a new
         one and adds it to the collection tree.
         """
-
         root = self._set_tree_root()
 
         for file in self.terraform_content:
