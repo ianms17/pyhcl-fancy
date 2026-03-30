@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/ianms17/pyhcl-fancy/compare/v1.0.0...v1.0.1) (2026-03-30)
+
+
+### Documentation
+
+* update read the docs user documentation ([#22](https://github.com/ianms17/pyhcl-fancy/issues/22)) ([2cdfab6](https://github.com/ianms17/pyhcl-fancy/commit/2cdfab612a8daace2ccaf04b297effd5a1698a88))
+
 ## [1.0.0](https://github.com/ianms17/pyhcl-fancy/compare/v0.3.1...v1.0.0) (2025-01-10)
 
 
