@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/ianms17/pyhcl-fancy/compare/v0.3.1...v1.0.0) (2025-01-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* Initial v1 release and documentation published to Read the Docs ([#20](https://github.com/ianms17/pyhcl-fancy/issues/20))
+
+### Features
+
+* Initial v1 release and documentation published to Read the Docs ([#20](https://github.com/ianms17/pyhcl-fancy/issues/20)) ([b97d16e](https://github.com/ianms17/pyhcl-fancy/commit/b97d16e2ef36f46c03ecc7d3a4c276702730d418))
+
 ## [0.3.1](https://github.com/ianms17/pyhcl-fancy/compare/v0.3.0...v0.3.1) (2025-01-09)
 
 
