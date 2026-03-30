@@ -16,7 +16,7 @@ pip install pyhcl-fancy
 
 ### Import and Use
 PyHCL Fancy has a simple to use, developer friendly interface that only requires one API
-call to generate Collection Tree of all of your Terraform files and their composite blocks.
+call to generate a Collection Tree of all of your Terraform files and their composite blocks.
 
 ```
 from pyhcl_fancy.parser.parser import FancyParser
@@ -30,7 +30,7 @@ fancy_parser.parse()
 Read more about the individual components that are generated via parsing: [Components](components.md)
 
 ### Code Documentation
-Read more about the functionality of the code: [Docs](documentation.md)
+Read more about the functionality of the code: [Docs](code_documentation.md)
 
 ### Find Us
 * GitHub: [https://github.com/ianms17/pyhcl-fancy](https://github.com/ianms17/pyhcl-fancy)
